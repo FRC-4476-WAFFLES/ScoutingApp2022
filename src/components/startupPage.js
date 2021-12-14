@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, Text, SafeAreaView, ImageBackground } from "react-native";
+import { Text, SafeAreaView, ImageBackground } from "react-native";
 import styles from "../styles/styles";
 
 class BackgroundTitle extends Component {
