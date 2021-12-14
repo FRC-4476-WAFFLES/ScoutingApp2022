@@ -21,4 +21,21 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
+
+  button: {
+    marginTop: 20,
+    borderRadius: 100,
+    padding: 10,
+    backgroundColor: "white",
+    width: Dimensions.get("screen").width * 0.8,
+    bottom: Dimensions.get("screen").height * 0.05,
+  },
+
+  buttonText: {
+    color: "black",
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    fontSize: 20,
+    textAlign: "center",
+  },
 });
