@@ -4,7 +4,5 @@ import React from "react";
 import AppStack from "./src/navigation/AppStack";
 
 export default function App() {
-  <NavigationContainer>
-    <AppStack />
-  </NavigationContainer>
+  return AppStack();
 }
