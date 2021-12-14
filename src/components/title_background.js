@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { StatusBar } from "expo-status-bar";
 import { Image, Text, SafeAreaView } from "react-native";
 import styles from "../styles/styles";
 
