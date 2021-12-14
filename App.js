@@ -1,8 +1,9 @@
 import React from "react";
-import BackgroundTitle from "./src/components/startupPage";
 
-export default function App() {
-  console.log("App executed");
+import AppStack from "./src/navigation/AppStack";
 
-  return <BackgroundTitle name="Yo mama" />;
+function App() {
+  return AppStack();
 }
+
+export default App;
