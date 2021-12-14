@@ -14,7 +14,7 @@ const startupPage = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <ImageBackground
         style={styles.backdrop}
-        source={require("../../assets/backdrop.png")}
+        source={require("../assets/images/backdrop.png")}
       >
         <Text style={styles.title}>W.A.F.F.L.E.S Scouting</Text>
       </ImageBackground>
