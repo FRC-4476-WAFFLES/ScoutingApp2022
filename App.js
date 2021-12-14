@@ -1,6 +1,5 @@
 import React from "react";
-
-import BackgroundTitle from "./src/components/title_background";
+import BackgroundTitle from "./src/components/startupPage";
 
 export default function App() {
   console.log("App executed");
