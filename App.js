@@ -1,11 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import HelloWorld from './src/components/HelloWorld';
+import BackgroundTitle from "./src/components/title_background";
 
 export default function App() {
   console.log("App executed");
 
-  return (
-    <HelloWorld name="Yo mama" />
-  );
+  return <BackgroundTitle name="Yo mama" />;
 }
