@@ -19,7 +19,7 @@ export default StyleSheet.create({
     fontSize: 50,
     color: "white",
     textAlign: "center",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 10 : 0,
   },
 
   button: {
