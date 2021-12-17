@@ -1,14 +1,35 @@
 import React from "react";
-import { View, Text } from "react-native";
-import dataStyle from "../styles/dataStyle";
+import { 
+  View,
+  Text,
+  StyleSheet,
+  Dimensions
+} from "react-native";
 
-const PageTitle = ({ text }) => {
+export default function PageTitle({ title }) {
   return (
-    <View style={dataStyle.container}>
-      <Text style={dataStyle.title}>{text}</Text>
-      <View style={dataStyle.bar}></View>
+    <View style={styles.container}>
+      <Text style={styles.title}>{ title }</Text>
+      <View style={styles.bar}></View>
     </View>
-  );
-};
+  )
+}
 
-export default PageTitle;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+
+  title: {
+    fontSize: 40,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight - 55 : 0,
+    textAlign: "center",
+  },
+
+  bar: {
+    marginTop: 14,
+    width: Dimensions.get("screen").width,
+    height: 5,
+    backgroundColor: "black",
+  }
+});

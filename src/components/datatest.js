@@ -1,30 +1,77 @@
-import React, { Component } from "react";
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, TextInput } from "react-native";
+import { 
+  View, 
+  Text, 
+  TextInput,
+  StyleSheet,
+  Dimensions
+} from "react-native";
 
 import PageTitle from "./PageTitle";
-import dataStyle from "../styles/dataStyle";
 
-const datatest = ({ navigation, route }) => {
+export default function datatest({ navigation, route }) {
   const [teamNumber, onChangeNumber] = React.useState("null");
 
   return (
-    <SafeAreaView style={dataStyle.container}>
-      <PageTitle text="Submission" />
-      <View style={[dataStyle.container, dataStyle.alignHeaders]}>
-        <Text style={dataStyle.teamHead}>Team #</Text>
+    <SafeAreaView style={styles.container}>
+      <PageTitle title="Submission" />
+      <View style={[styles.container, styles.alignHeaders]}>
+        <Text style={styles.teamHead}>Team #</Text>
         <TextInput
-          style={dataStyle.input}
+          style={styles.input}
           onChangeText={onChangeNumber}
           value={teamNumber}
           placeholder="Team Number"
           keyboardType="numeric"
         ></TextInput>
-        <Text style={dataStyle.headings}>Overall Performance</Text>
-        <Text style={dataStyle.headings}>Points Scored</Text>
+        <Text style={styles.headings}>Overall Performance</Text>
+        <Text style={styles.headings}>Points Scored</Text>
       </View>
     </SafeAreaView>
-  );
-};
+  )
+}
 
-export default datatest;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+
+  // Main Title
+  title: {
+    fontSize: 40,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight - 55 : 0,
+    textAlign: "center",
+  },
+
+  bar: {
+    marginTop: 14,
+    width: Dimensions.get("screen").width,
+    height: 5,
+    backgroundColor: "black",
+  },
+
+  alignHeaders: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    marginBottom: 600,
+  },
+
+  // Headers
+  teamHead: {
+    color: "black",
+    fontSize: 30,
+  },
+
+  headings: {
+    fontSize: 25,
+  },
+
+  input: {
+    backgroundColor: "#FFBCBC",
+    borderRadius: 10,
+    padding: 10,
+    width: Dimensions.get("screen").width * 0.8,
+  }
+});

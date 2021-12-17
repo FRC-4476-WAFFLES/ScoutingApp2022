@@ -1,14 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import {
   Text,
   SafeAreaView,
   ImageBackground,
   TouchableOpacity,
   View,
+  StyleSheet,
+  Dimensions
 } from "react-native";
-import styles from "../styles/styles";
 
-const startupPage = ({ navigation }) => {
+export default function StartupPage({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -27,7 +28,45 @@ const startupPage = ({ navigation }) => {
         </View>
       </TouchableOpacity>
     </SafeAreaView>
-  );
-};
+  )
+}
 
-export default startupPage;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+
+  backdrop: {
+    flex: 1,
+    width: Dimensions.get("screen").width,
+    height: Dimensions.get("screen").height,
+  },
+
+  title: {
+    fontSize: 50,
+    color: "white",
+    textAlign: "center",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+
+  button: {
+    marginTop: 20,
+    borderRadius: 100,
+    padding: 10,
+    backgroundColor: "white",
+    width: Dimensions.get("screen").width * 0.8,
+    bottom: Dimensions.get("screen").height * 0.05,
+  },
+
+  buttonText: {
+    color: "black",
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    fontSize: 20,
+    textAlign: "center",
+  },
+});

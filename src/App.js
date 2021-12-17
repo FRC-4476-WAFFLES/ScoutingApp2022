@@ -1,4 +1,4 @@
-import AppStack from "./src/navigation/AppStack";
+import AppStack from "./navigation/AppStack";
 
 export default function App() {
   return AppStack();
