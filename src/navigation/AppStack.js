@@ -7,7 +7,7 @@ import datatest from "../components/datatest";
 
 const Stack = createNativeStackNavigator();
 
-const AppStack = () => {
+export default function AppStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -21,5 +21,3 @@ const AppStack = () => {
     </NavigationContainer>
   );
 };
-
-export default AppStack;

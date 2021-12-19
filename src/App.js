@@ -1,5 +1,9 @@
+import { registerRootComponent } from 'expo';
+import React from 'react';
 import AppStack from "./navigation/AppStack";
 
-export default function App() {
-  return AppStack();
+const App = () => {
+  return <AppStack />
 }
+
+registerRootComponent(App);

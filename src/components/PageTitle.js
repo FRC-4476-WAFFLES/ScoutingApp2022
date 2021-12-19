@@ -3,7 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  StatusBar
 } from "react-native";
 
 export default function PageTitle({ title }) {

@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  StatusBar
 } from "react-native";
 
 export default function StartupPage({ navigation }) {

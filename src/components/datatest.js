@@ -5,7 +5,8 @@ import {
   Text, 
   TextInput,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  StatusBar
 } from "react-native";
 
 import PageTitle from "./PageTitle";
