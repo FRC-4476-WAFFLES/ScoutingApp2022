@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Dimensions,
   StatusBar,
+  ScrollView
 } from "react-native";
 
 import PageTitle from "./PageTitle";
@@ -18,22 +19,24 @@ export default function datatest({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <PageTitle title="Submission" />
-      <View style={[styles.container, styles.alignHeaders]}>
-        <Text style={styles.teamHead}>Team #</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeNumber}
-          placeholder="Team Number"
-          keyboardType="numeric"
-        ></TextInput>
+      <ScrollView style={styles.scrollView}>
+        <PageTitle title="Submission" />
+        <View style={[styles.container, styles.alignHeaders]}>
+          <Text style={styles.teamHead}>Team #</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeNumber}
+            placeholder="Team Number"
+            keyboardType="numeric"
+          ></TextInput>
 
-        <Text>Starting Position (To Goal)</Text>
-        <StartingPosition />
+          <Text>Starting Position (To Goal)</Text>
+          <StartingPosition />
 
-        <Text style={styles.headings}>Overall Performance</Text>
-        <Text style={styles.headings}>Points Scored</Text>
-      </View>
+          <Text style={styles.headings}>Overall Performance</Text>
+          <Text style={styles.headings}>Points Scored</Text>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
