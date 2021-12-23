@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
     View,
     StyleSheet
@@ -8,7 +8,7 @@ import SquareButton from './SquareButton'
 const positions = ["LEFT", "CENTER", "RIGHT"]
 
 export default function StartingPosition(props) {
-    const [selectedPosition, setSelectedPosition] = useState(0);
+    const [selectedPosition, setSelectedPosition] = React.useState(0);
     
     return (
         <View style={styles.container}>
