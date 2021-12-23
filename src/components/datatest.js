@@ -1,12 +1,12 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { 
-  View, 
-  Text, 
+import {
+  View,
+  Text,
   TextInput,
   StyleSheet,
   Dimensions,
-  StatusBar
+  StatusBar,
 } from "react-native";
 
 import PageTitle from "./PageTitle";
@@ -14,6 +14,7 @@ import StartingPosition from "./StartingPosition";
 
 export default function datatest({ navigation, route }) {
   const [teamNumber, onChangeNumber] = React.useState("null");
+  console.log(teamNumber);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -23,7 +24,6 @@ export default function datatest({ navigation, route }) {
         <TextInput
           style={styles.input}
           onChangeText={onChangeNumber}
-          value={teamNumber}
           placeholder="Team Number"
           keyboardType="numeric"
         ></TextInput>
@@ -31,12 +31,11 @@ export default function datatest({ navigation, route }) {
         <Text>Starting Position (To Goal)</Text>
         <StartingPosition />
 
-
         <Text style={styles.headings}>Overall Performance</Text>
         <Text style={styles.headings}>Points Scored</Text>
       </View>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -80,5 +79,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     width: Dimensions.get("screen").width * 0.8,
-  }
+  },
 });
