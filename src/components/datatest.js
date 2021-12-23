@@ -10,6 +10,7 @@ import {
 } from "react-native";
 
 import PageTitle from "./PageTitle";
+import StartingPosition from "./StartingPosition";
 
 export default function datatest({ navigation, route }) {
   const [teamNumber, onChangeNumber] = React.useState("null");
@@ -26,6 +27,11 @@ export default function datatest({ navigation, route }) {
           placeholder="Team Number"
           keyboardType="numeric"
         ></TextInput>
+
+        <Text>Starting Position (To Goal)</Text>
+        <StartingPosition />
+
+
         <Text style={styles.headings}>Overall Performance</Text>
         <Text style={styles.headings}>Points Scored</Text>
       </View>
