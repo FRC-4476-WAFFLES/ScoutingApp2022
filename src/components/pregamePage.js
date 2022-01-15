@@ -3,13 +3,14 @@ import {
   View,
   Text,
   SafeAreaView,
-  ScrollView
+  ScrollView,
+  Button
 } from "react-native";
 
 import PageTitle from './PageTitle'
 import StartingPosition from "./StartingPosition";
 
-export default function pregamePage(props) {
+export default function pregamePage({ navigation }) {
     return (
         <SafeAreaView>
             <ScrollView>
@@ -17,6 +18,7 @@ export default function pregamePage(props) {
                 <View>
                     <Text>Starting Position</Text>
                     <StartingPosition />
+                    <Button onPress={() => navigation.navigate("Autonomous")} title="Autonomous"></Button>
                 </View>
             </ScrollView>
         </SafeAreaView>
