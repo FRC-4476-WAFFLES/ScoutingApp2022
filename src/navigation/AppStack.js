@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import startupPage from "../components/startupPage";
 import datatest from "../components/datatest";
+import pregame from "../components/pregamePage";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +17,7 @@ export default function AppStack() {
           component={startupPage}
           options={{ title: "Welcome" }}
         />
-        <Stack.Screen name="datatest" component={datatest} />
+        <Stack.Screen name="Pregame" component={pregame} />
       </Stack.Navigator>
     </NavigationContainer>
   );

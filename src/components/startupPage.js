@@ -22,7 +22,7 @@ export default function StartupPage({ navigation }) {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("datatest")}
+        onPress={() => navigation.navigate("Pregame")}
       >
         <View>
           <Text style={styles.buttonText}>Get Started</Text>
