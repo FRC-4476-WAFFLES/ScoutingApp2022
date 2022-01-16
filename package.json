@@ -27,7 +27,8 @@
     "react-native-screens": "~3.8.0",
     "react-native-web": "0.17.1",
     "react-navigation-drawer": "^2.7.1",
-    "yarn": "^1.22.17"
+    "yarn": "^1.22.17",
+    "react-native-svg": "12.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
