@@ -13,6 +13,8 @@ import PullUpArrow from './PullUpArrow';
 
 export default function MatchPage({ navigation }) {
     const [isExpanded, setIsExpanded] = React.useState(false);
+    const [lowerBalls, setLowerBalls] = React.useState(0);
+    const [upperBalls, setUpperBalls] = React.useState(0);
 
     return (
         <SafeAreaView>
@@ -28,7 +30,24 @@ export default function MatchPage({ navigation }) {
                     {
                         isExpanded &&
                         <View style={styles.child}>
-                            <Text>Lmao</Text>
+                            <View>
+                                <Text>{lowerBalls} Balls scored in Lower Hub</Text>
+                                <TouchableOpacity style={styles.button, styles.minusButton} onPress={() => updateLowerBalls(-1)} >
+                                    <Text style={styles.buttonText}>-</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button, styles.plusButton} onPress={() => updateLowerBalls(1)} >
+                                    <Text style={styles.buttonText}>+</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <Text>{upperBalls} Balls scored in Upper Hub</Text>
+                                <TouchableOpacity style={styles.button, styles.minusButton} onPress={() => updateUpperBalls(-1)} >
+                                    <Text style={styles.buttonText}>-</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button, styles.plusButton} onPress={() => updateUpperBalls(1)}>
+                                    <Text style={styles.buttonText}>+</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     }
                 </View>
@@ -38,6 +57,20 @@ export default function MatchPage({ navigation }) {
 
     function toggleExpand() {
         setIsExpanded(current => !current)
+    }
+
+    function updateLowerBalls(num) {
+        let target = lowerBalls + num;
+        if (target >= 0) {
+            setLowerBalls(target);
+        }
+    }
+
+    function updateUpperBalls(num) {
+        let target = upperBalls + num;
+        if (target >= 0) {
+            setUpperBalls(target);
+        }
     }
 }
 
