@@ -5,7 +5,8 @@ import {
     StyleSheet,
     ScrollView,
     SafeAreaView,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import DropDownArrow from './DropDownArrow';
@@ -28,8 +29,11 @@ export default function MatchPage({ navigation }) {
     return (
         <SafeAreaView>
             <ScrollView>
+                <View style={styles.commentContainer}>
+                    <Image source={require('../assets/images/comment-icon.png')} style={styles.commentIcon} />
+                </View>
                 <PageTitle title="Match" />
-                <View>
+                <View style={styles}>
                     <TouchableOpacity style={styles.row} onPress={() => toggleAutoExpand()}>
                         {
                             isAutoExpanded ? <PullUpArrow /> : <DropDownArrow />
@@ -110,9 +114,22 @@ export default function MatchPage({ navigation }) {
                         </View>
                     }
                 </View>
+                <Text>{getDataString()}</Text>
+                <TouchableOpacity onPress={() => {console.log(getDataString()); navigation.navigate("QRCode", {
+                    data: getDataString()
+                })}}>
+                    <Text>Submit</Text>
+                </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     )
+    
+    function getDataString() {
+        let data = "key,Auto Low Goals,Auto High Goals,Teleop Low Goals,Teleop High Goals,Traverser Climb,Did not move / show up\n"
+        data += `,${autoLowerBalls},${autoUpperBalls},${teleOpLowerBalls},${teleOpUpperBalls},${+ isTraversalChecked}`
+        
+        return data
+    }
 
     function toggleAutoExpand() {
         setIsAutoExpanded(current => !current)

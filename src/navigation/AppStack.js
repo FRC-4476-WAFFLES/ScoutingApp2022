@@ -6,6 +6,8 @@ import startupPage from "../components/startupPage";
 import datatest from "../components/datatest";
 import pregame from "../components/pregamePage";
 import autoPage from "../components/autoPage";
+import MatchPage from "../components/MatchPage";
+import QRCodePage from "../components/QRCodePage";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +22,8 @@ export default function AppStack() {
         />
         <Stack.Screen name="Pregame" component={pregame} />
         <Stack.Screen name="Autonomous" component={autoPage} />
+        <Stack.Screen name="Match" component={MatchPage} />
+        <Stack.Screen name="QRCode" component={QRCodePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
