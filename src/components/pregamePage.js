@@ -16,8 +16,19 @@ import PageTitle from "./PageTitle";
 import StartingPosition from "./StartingPosition";
 
 export default function pregamePage({ navigation }) {
-  let x = "123";
+  let x = "Qn12";
+  let teamNum = "4476";
   const [text, onChangeText] = React.useState(x);
+
+  const saveData = async () => {
+    try {
+      await AsyncStorage.setItem("teamNum", teamNum);
+      await AsyncStorage.setItem("x", text);
+    } catch (error) {
+      // Error saving data
+    }
+    navigation.navigate("Match");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -27,7 +38,7 @@ export default function pregamePage({ navigation }) {
           <Image />
         </View>
         <Text style={styles.header}>You are scouting Team...</Text>
-        <Text style={styles.header}>4476</Text>
+        <Text style={styles.header}>{teamNum}</Text>
         <Text style={styles.header2}>Match #</Text>
         <TextInput
           style={styles.input}
@@ -36,7 +47,11 @@ export default function pregamePage({ navigation }) {
         />
         <Text style={styles.header2}>Starting Position</Text>
         <StartingPosition />
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={async () => {
+            saveData();
+          }}
+        >
           <Text style={styles.submit}>Submit</Text>
         </TouchableOpacity>
       </ScrollView>
