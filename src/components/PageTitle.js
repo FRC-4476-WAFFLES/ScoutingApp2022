@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  StatusBar
+  StatusBar,
+  Platform
 } from "react-native";
 
 export default function PageTitle({ title }) {
@@ -23,12 +24,12 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 40,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight - 55 : 0,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight - 55 : 10,
     textAlign: "center",
   },
 
   bar: {
-    marginTop: 14,
+    marginTop: Platform.OS == "android" ? 14 : 18,
     width: Dimensions.get("screen").width,
     height: 5,
     backgroundColor: "black",
