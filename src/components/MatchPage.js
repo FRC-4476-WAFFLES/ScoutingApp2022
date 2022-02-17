@@ -7,7 +7,8 @@ import {
     SafeAreaView,
     TouchableOpacity,
     Image,
-    TextInput
+    TextInput,
+    Dimensions
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import DropDownArrow from './DropDownArrow';
@@ -33,12 +34,23 @@ export default function MatchPage({ navigation }) {
     return (
         <SafeAreaView>
             <ScrollView>
-                
-                <TouchableOpacity onPress={() => { setIsCommentBoxOpen(!isCommentBoxOpen); console.log(isCommentBoxOpen) }} style={styles.commentContainer}>
-                    <View style={styles.commentIconContainer}>
-                        <Image source={require('../assets/images/comment-icon.png')} style={styles.commentIcon} />
-                    </View>
+
+                <TouchableOpacity onPress={() => handleCommentClick()} style={styles.commentIconContainer}>
+                    <Image source={require('../assets/images/comment-icon.png')} style={styles.commentIcon} />
                 </TouchableOpacity>
+                {
+                    isCommentBoxOpen &&
+                    <View style={styles.commentBox}>
+                        <Text style={styles.commentTitle}>Comment</Text>
+                        <View style={styles.commentBar}></View>
+                        <TextInput 
+                            style={styles.commentInput}
+                            multiline
+                            onChangeText={text => setCommentValue(text)}
+                            value={commentValue}
+                        ></TextInput>
+                    </View>
+                }
                 <PageTitle title="Match" />
                 <View 
                     style={[
@@ -142,6 +154,10 @@ export default function MatchPage({ navigation }) {
             </ScrollView>
         </SafeAreaView>
     )
+
+    function handleCommentClick() {
+        setIsCommentBoxOpen(!isCommentBoxOpen);
+    }
     
     function getDataString() {
         let data = "key,Auto Low Goals,Auto High Goals,Teleop Low Goals,Teleop High Goals,Traverser Climb,Did not move / show up\n"
@@ -199,16 +215,39 @@ const styles = StyleSheet.create({
         backgroundColor: '#C4C4C4',
         padding: 13,
         borderRadius: 100,
+        zIndex: 1
     },
 
     commentBox: {
         backgroundColor: 'white',
         position: 'absolute',
-        borderWidth: 5
+        right: 70,
+        top: 55,
+        width: 300,
+        height: 500,
+        zIndex: 999,
+        borderWidth: 5,
+        borderRadius: 12,
+    },
+
+    commentTitle: {
+        fontSize: 35,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+
+    commentBar: {
+        width: '100%',
+        height: 5,
+        backgroundColor: "black",
     },
 
     commentInput: {
-        backgroundColor: 'black'
+        width: '100%',
+        height: '100%',
+        padding: 5,
+        fontSize: 18,
+        fontWeight: 'bold'
     },
 
     collapsibleContainer: {
