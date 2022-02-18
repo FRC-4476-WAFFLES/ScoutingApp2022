@@ -30,7 +30,8 @@
     "react-native-svg": "^12.1.1",
     "react-native-web": "0.17.1",
     "react-navigation-drawer": "^2.7.1",
-    "yarn": "^1.22.17"
+    "yarn": "^1.22.17",
+    "expo-updates": "~0.10.15"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
