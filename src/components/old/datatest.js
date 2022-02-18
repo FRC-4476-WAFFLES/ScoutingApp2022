@@ -7,11 +7,11 @@ import {
   StyleSheet,
   Dimensions,
   StatusBar,
-  ScrollView
+  ScrollView,
 } from "react-native";
 
-import PageTitle from "./PageTitle";
-import StartingPosition from "./StartingPosition";
+import PageTitle from "../PageTitle";
+import StartingPosition from "../StartingPosition";
 
 export default function datatest({ navigation, route }) {
   const [teamNumber, onChangeNumber] = React.useState("null");
