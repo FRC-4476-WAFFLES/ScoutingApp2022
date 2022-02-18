@@ -27,7 +27,12 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.WAFFLESRobotics.ScoutingApp",
-      "versionCode": 1
+      "versionCode": 1,
+      "permissions": [
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./src/assets/images/favicon.png"

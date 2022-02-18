@@ -3,33 +3,77 @@ import {
   Text,
   SafeAreaView,
   ImageBackground,
+  Image,
   TouchableOpacity,
   View,
   StyleSheet,
   Dimensions,
-  StatusBar
+  StatusBar,
 } from "react-native";
 
 export default function StartupPage({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
+      {/* Background and title */}
       <ImageBackground
         style={styles.backdrop}
-        source={require("../assets/images/backdrop.png")}
+        source={require("../assets/images/startPage/backdrop.png")}
       >
         <Text style={styles.title}>W.A.F.F.L.E.S Scouting</Text>
       </ImageBackground>
 
+      {/* LESS GO button */}
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Match")}
       >
         <View>
-          <Text style={styles.buttonText}>Get Started</Text>
+          <Text style={styles.buttonText}>
+            <View>
+              <Image
+                style={styles.buttonImage}
+                source={require("../assets/images/startPage/paper-mario.png")}
+              />
+            </View>
+            LES GOOOO!
+            <View>
+              <Image
+                style={styles.buttonImageDababy}
+                source={require("../assets/images/startPage/dababy.png")}
+              />
+            </View>
+          </Text>
         </View>
       </TouchableOpacity>
+
+      {/* Bottom Row Icons */}
+      <View style={styles.rowIcons}>
+        {/* Camera Icon */}
+        <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
+          <Image
+            source={require("../assets/images/startPage/cam-transp.png")}
+            onPress={() => navigation.navigate("Autonomous")}
+          />
+        </TouchableOpacity>
+        {/* Analysis Icon */}
+        <TouchableOpacity onPress={() => navigation.navigate("Analysis")}>
+          <Image
+            source={require("../assets/images/startPage/analysis-icon.png")}
+          />
+        </TouchableOpacity>
+        {/* List Icon */}
+        <TouchableOpacity onPress={() => navigation.navigate("TierList")}>
+          <Image source={require("../assets/images/startPage/list-icon.png")} />
+        </TouchableOpacity>
+        {/* Settings Icon */}
+        <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+          <Image
+            source={require("../assets/images/startPage/settings-icon.png")}
+          />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -60,7 +104,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "white",
     width: Dimensions.get("screen").width * 0.8,
-    bottom: Dimensions.get("screen").height * 0.05,
+    bottom: Dimensions.get("screen").height * 0.1,
   },
 
   buttonText: {
@@ -69,5 +113,26 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     fontSize: 20,
     textAlign: "center",
+  },
+
+  buttonImage: {
+    width: 30,
+    height: 30,
+    alignContent: "flex-start",
+    marginRight: 100,
+  },
+
+  buttonImageDababy: {
+    width: 30,
+    height: 30,
+    alignContent: "flex-end",
+    marginLeft: 100,
+  },
+
+  rowIcons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    bottom: Dimensions.get("screen").height * 0.05,
   },
 });

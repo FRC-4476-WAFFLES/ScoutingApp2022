@@ -1,34 +1,33 @@
-import React from 'react'
-import {
-    View,
-    StyleSheet
-} from 'react-native'
-import SquareButton from './SquareButton'
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import SquareButton from "./SquareButton";
 
-const positions = ["LEFT", "CENTER", "RIGHT"]
+const positions = ["LEFT", "CENTER", "RIGHT"];
 
 export default function StartingPosition(props) {
-    const [selectedPosition, setSelectedPosition] = React.useState(0);
-    
-    return (
-        <View style={styles.container}>
-            {positions.map(position => (
-                <SquareButton
-                    key={position}
-                    value={position}
-                    displayValue={position}
-                    selected={selectedPosition === position}
-                    singleTap={(valueTap) => setSelectedPosition(valueTap)}
-                />
-            ))}
-        </View>
-    )
+  const [selectedPosition, setSelectedPosition] = React.useState(0);
+
+  return (
+    <View style={styles.container}>
+      {positions.map((position) => (
+        <SquareButton
+          key={position}
+          value={position}
+          displayValue={position}
+          selected={selectedPosition === position}
+          singleTap={(valueTap) => setSelectedPosition(valueTap)}
+        />
+      ))}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flexWrap: "wrap",
-        flexDirection: "row",
-        justifyContent: "center"
-    }
-})
+  container: {
+    flexWrap: "wrap",
+    flexDirection: "column",
+    justifyContent: "center",
+    left: "10%",
+    marginBottom: "10%",
+  },
+});
