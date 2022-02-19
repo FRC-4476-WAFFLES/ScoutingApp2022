@@ -25,7 +25,7 @@ export default function StartupPage({ navigation }) {
       {/* LESS GO button */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Match")}
+        onPress={() => navigation.navigate("Pregame")}
       >
         <View>
           <Text style={styles.buttonText}>

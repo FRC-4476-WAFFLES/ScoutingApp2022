@@ -15,7 +15,7 @@ import { Header } from "react-native/Libraries/NewAppScreen";
 import PageTitle from "./PageTitle";
 import StartingPosition from "./StartingPosition";
 
-export default function pregamePage({ navigation }) {
+export default function PregamePage({ navigation }) {
   let x = "Qn12";
   let teamNum = "4476";
   const [text, onChangeText] = React.useState(x);
