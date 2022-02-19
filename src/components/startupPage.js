@@ -134,5 +134,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     bottom: Dimensions.get("screen").height * 0.05,
+    width: '75%'
   },
 });

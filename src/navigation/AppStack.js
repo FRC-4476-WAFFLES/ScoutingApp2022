@@ -9,7 +9,6 @@ import settingsPage from "../components/settings";
 import analysisPage from "../components/analysisPage";
 import tierListPage from "../components/tierListPage";
 import cameraPage from "../components/cameraPage";
-import matchPage from "../components/MatchPage";
 
 const Stack = createNativeStackNavigator();
 

@@ -8,7 +8,8 @@ import {
     TouchableOpacity,
     Image,
     TextInput,
-    Dimensions
+    Dimensions,
+    Platform
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import DropDownArrow from './DropDownArrow';
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
     commentIconContainer: {
         position: 'absolute',
         right: 25,
-        top: 2,
+        top: Platform.OS === "android" ? 25 : 2,
         backgroundColor: '#C4C4C4',
         padding: 13,
         borderRadius: 100,
@@ -222,7 +223,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         position: 'absolute',
         right: 70,
-        top: 55,
+        top: Platform.OS === "android" ? 75 : 55,
         width: 300,
         height: 500,
         zIndex: 999,
