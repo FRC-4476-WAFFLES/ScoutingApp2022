@@ -1,5 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
 import { 
   View,
   Text,
@@ -8,9 +7,6 @@ import {
   StatusBar,
   Platform
 } from "react-native";
-=======
-import { View, Text, StyleSheet, Dimensions, StatusBar } from "react-native";
->>>>>>> 34d7bd3c873d50dfe11aeccf95de18dd3e510e41
 
 export default function PageTitle({ title }) {
   return (
@@ -29,11 +25,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 40,
-<<<<<<< HEAD
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight - 55 : 10,
-=======
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
->>>>>>> 34d7bd3c873d50dfe11aeccf95de18dd3e510e41
     textAlign: "center",
   },
 
