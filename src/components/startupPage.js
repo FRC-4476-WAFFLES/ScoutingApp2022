@@ -25,7 +25,7 @@ export default function StartupPage({ navigation }) {
       {/* LESS GO button */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Match")}
+        onPress={() => navigation.navigate("Pregame")}
       >
         <View>
           <Text style={styles.buttonText}>
@@ -134,5 +134,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     bottom: Dimensions.get("screen").height * 0.05,
+    width: '75%'
   },
 });

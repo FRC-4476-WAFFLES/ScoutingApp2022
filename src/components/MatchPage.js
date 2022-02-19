@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     Image,
     TextInput,
-    Dimensions
+    Platform
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import DropDownArrow from './DropDownArrow';
@@ -33,24 +33,23 @@ export default function MatchPage({ navigation }) {
 
     return (
         <SafeAreaView>
+        <TouchableOpacity onPress={() => handleCommentClick()} style={styles.commentIconContainer}>
+            <Image source={require('../assets/images/comment-icon.png')} style={styles.commentIcon} />
+        </TouchableOpacity>
+        {
+            isCommentBoxOpen &&
+            <View style={styles.commentBox}>
+                <Text style={styles.commentTitle}>Comment</Text>
+                <View style={styles.commentBar}></View>
+                <TextInput 
+                    style={styles.commentInput}
+                    multiline
+                    onChangeText={text => setCommentValue(text)}
+                    value={commentValue}
+                ></TextInput>
+            </View>
+        }
             <ScrollView>
-
-                <TouchableOpacity onPress={() => handleCommentClick()} style={styles.commentIconContainer}>
-                    <Image source={require('../assets/images/comment-icon.png')} style={styles.commentIcon} />
-                </TouchableOpacity>
-                {
-                    isCommentBoxOpen &&
-                    <View style={styles.commentBox}>
-                        <Text style={styles.commentTitle}>Comment</Text>
-                        <View style={styles.commentBar}></View>
-                        <TextInput 
-                            style={styles.commentInput}
-                            multiline
-                            onChangeText={text => setCommentValue(text)}
-                            value={commentValue}
-                        ></TextInput>
-                    </View>
-                }
                 <PageTitle title="Match" />
                 <View 
                     style={[
@@ -211,7 +210,7 @@ const styles = StyleSheet.create({
     commentIconContainer: {
         position: 'absolute',
         right: 25,
-        top: 2,
+        top: Platform.OS === "android" ? 25 : 2,
         backgroundColor: '#C4C4C4',
         padding: 13,
         borderRadius: 100,
@@ -221,24 +220,24 @@ const styles = StyleSheet.create({
     commentBox: {
         backgroundColor: 'white',
         position: 'absolute',
-        right: 70,
-        top: 55,
-        width: 300,
-        height: 500,
+        right: 75,
+        top: Platform.OS === "android" ? 80 : 55,
+        width: 450,
+        height: 700,
         zIndex: 999,
-        borderWidth: 5,
+        borderWidth: 7,
         borderRadius: 12,
     },
 
     commentTitle: {
-        fontSize: 35,
+        fontSize: 40,
         fontWeight: 'bold',
         textAlign: 'center'
     },
 
     commentBar: {
         width: '100%',
-        height: 5,
+        height: 7,
         backgroundColor: "black",
     },
 
@@ -246,8 +245,9 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         padding: 5,
-        fontSize: 18,
-        fontWeight: 'bold'
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlignVertical: 'top'
     },
 
     collapsibleContainer: {
@@ -268,7 +268,8 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontSize: 30
+        fontSize: 40,
+        fontWeight: 'bold'
     },
 
     title: {

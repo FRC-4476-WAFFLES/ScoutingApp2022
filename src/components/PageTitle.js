@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 40,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight - 55 : 10,
+    paddingTop: Platform.OS === "android" ? 30 : 10,
     textAlign: "center",
   },
 

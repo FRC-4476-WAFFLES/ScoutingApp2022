@@ -9,7 +9,7 @@ import settingsPage from "../components/settings";
 import analysisPage from "../components/analysisPage";
 import tierListPage from "../components/tierListPage";
 import cameraPage from "../components/cameraPage";
-import matchPage from "../components/MatchPage";
+import pregamePage from "../components/pregamePage";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +22,7 @@ export default function AppStack() {
           component={startupPage}
           options={{ title: "Welcome" }}
         />
+        <Stack.Screen name="Pregame" component={pregamePage} />
         <Stack.Screen name="Match" component={MatchPage} />
         <Stack.Screen name="QRCode" component={QRCodePage} />
         <Stack.Screen name="Settings" component={settingsPage} />
