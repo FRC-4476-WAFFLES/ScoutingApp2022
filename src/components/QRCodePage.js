@@ -17,12 +17,20 @@ export default function QRCodePage({ route, navigation }) {
         <SafeAreaView>
             <ScrollView>
                 <PageTitle title={"QR Code"} />
-                <QRCode value={route.params.data} />
+                <View style={styles.qrcodeContainer}>
+                    <QRCode 
+                        value={route.params.data} 
+                        size={550}
+                    />
+                </View>
             </ScrollView>
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-
+    qrcodeContainer: {
+        marginTop: 150,
+        marginLeft: 20
+    }
 })

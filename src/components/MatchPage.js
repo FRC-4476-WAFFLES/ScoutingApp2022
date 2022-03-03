@@ -11,11 +11,14 @@ import {
     Platform
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
+import * as FileSystem from 'expo-file-system';
+
 import DropDownArrow from './DropDownArrow';
 import PageTitle from './PageTitle';
 import PullUpArrow from './PullUpArrow';
 
-export default function MatchPage({ navigation }) {
+export default function MatchPage({ route, navigation }) {
+
     const [isAutoExpanded, setIsAutoExpanded] = React.useState(true);
     const [isTeleOpExpanded, setIsTeleOpExpanded] = React.useState(false);
     const [isEndgameExpanded, setIsEndgameExpanded] = React.useState(false);
@@ -144,25 +147,44 @@ export default function MatchPage({ navigation }) {
                         </View>
                     }
                 </View>
-                <Text>{getDataString()}</Text>
-                <TouchableOpacity onPress={() => {console.log(getDataString()); navigation.navigate("QRCode", {
-                    data: getDataString()
-                })}}>
-                    <Text>Submit</Text>
-                </TouchableOpacity>
+
+                <View>
+                    <TouchableOpacity onPress={async () => {
+                        await matchSubmit();
+                        navigation.navigate("QRCode", {
+                            data: await getDataString()
+                        })
+                    }}>
+                        <Text>SubmitSSS</Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         </SafeAreaView>
     )
 
+    async function matchSubmit() {
+        let match = route.params.match;
+        let csvURI = `${FileSystem.documentDirectory}match${match}.csv`;
+
+        let currData = await FileSystem.readAsStringAsync(csvURI);
+        currData += `${autoUpperBalls},${autoLowerBalls},${teleOpUpperBalls},${teleOpLowerBalls},${+ isTraversalChecked},${commentValue === `` ? 0 : commentValue}`;
+        
+        await FileSystem.writeAsStringAsync(csvURI, currData);
+        console.log(await FileSystem.readAsStringAsync(csvURI));
+    }
+
+    async function getDataString() {
+        let match = route.params.match;
+        let csvURI = `${FileSystem.documentDirectory}match${match}.csv`;
+        let dataString = await FileSystem.readAsStringAsync(csvURI);
+
+        console.log(dataString);
+        
+        return dataString;
+    }
+
     function handleCommentClick() {
         setIsCommentBoxOpen(!isCommentBoxOpen);
-    }
-    
-    function getDataString() {
-        let data = "key,Auto Low Goals,Auto High Goals,Teleop Low Goals,Teleop High Goals,Traverser Climb,Did not move / show up\n"
-        data += `,${autoLowerBalls},${autoUpperBalls},${teleOpLowerBalls},${teleOpUpperBalls},${+ isTraversalChecked}`
-        
-        return data
     }
 
     function toggleAutoExpand() {
