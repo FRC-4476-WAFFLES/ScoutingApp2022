@@ -26,9 +26,6 @@ export default function AppStack() {
         <Stack.Screen name="Match" component={MatchPage} />
         <Stack.Screen name="QRCode" component={QRCodePage} />
         <Stack.Screen name="Settings" component={settingsPage} />
-        <Stack.Screen name="Analysis" component={analysisPage} />
-        <Stack.Screen name="TierList" component={tierListPage} />
-        <Stack.Screen name="Camera" component={cameraPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

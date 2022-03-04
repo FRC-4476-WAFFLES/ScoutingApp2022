@@ -19,6 +19,21 @@ export default function StartupPage({ navigation }) {
   const scheduleFileUri = `${FileSystem.documentDirectory}${'MatchSchedule.json'}`;
   const settingsFileUri = `${FileSystem.documentDirectory}${'ScoutingAppSettings.json'}`
 
+  React.useEffect(async () => {
+    async function setSettingsVars() {
+      try {
+        let settingsJSON = await JSON.parse(await FileSystem.readAsStringAsync(settingsFileUri));
+        setNameText(await settingsJSON["Settings"]["scoutName"]);
+        setDriverStation(await settingsJSON["Settings"]["driverStation"]);
+      }
+      catch (err) {
+        console.log("No Settings File Saved.");
+      }
+    }
+
+    setSettingsVars();
+  }, [])
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollContainer}>

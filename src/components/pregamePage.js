@@ -62,7 +62,7 @@ export default function PregamePage({ navigation }) {
         />
 
         <TouchableOpacity onPress={findMatch}>
-          <Text>Find Match</Text>
+          <Text style={styles.findMatch}>Find Match</Text>
         </TouchableOpacity>
         
         <Text style={styles.header}>You are scouting Team...</Text>
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   header2: {
     fontSize: 35,
     left: "5%",
-    paddingTop: "5%",
+    paddingTop: "2%",
   },
 
   input: {
@@ -183,4 +183,16 @@ const styles = StyleSheet.create({
     left: "10%",
     marginBottom: "10%",
   },
+
+  findMatch: {
+    fontSize: 25,
+    width: "50%",
+    backgroundColor: "#FFD27A",
+    borderRadius: 100,
+    padding: "2%",
+    left: 140,
+    justifyContent: "center",
+    textAlign: "center",
+    marginBottom: 20
+  }
 });

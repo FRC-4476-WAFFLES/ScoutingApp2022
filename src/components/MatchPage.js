@@ -10,7 +10,7 @@ import {
     TextInput,
     Platform
 } from 'react-native';
-import CheckBox from 'react-native-check-box';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import * as FileSystem from 'expo-file-system';
 
 import DropDownArrow from './DropDownArrow';
@@ -139,11 +139,16 @@ export default function MatchPage({ route, navigation }) {
                         isEndgameExpanded &&
                         <View style={styles.child}>
                             <Text style={[styles.checkboxHeader, styles.text]}>Hanger Traversal</Text>
-                            <CheckBox
-                                style={styles.checkbox}
-                                onClick={() => setIsTraversalChecked(current => !current)}
+                            <View style={styles.traversalCheckContainer}>
+                                <BouncyCheckbox
+                                size={75}
+                                fillColor="black"
+                                unfillColor="#FFFFFF"
+                                iconStyle={{ borderColor: "black" }}
                                 isChecked={isTraversalChecked}
-                            />
+                                onPress={() => setIsTraversalChecked(!isTraversalChecked)}
+                                />
+                            </View>
                         </View>
                     }
                 </View>
@@ -155,7 +160,7 @@ export default function MatchPage({ route, navigation }) {
                             data: await getDataString()
                         })
                     }}>
-                        <Text>SubmitSSS</Text>
+                        <Text style={styles.submit}>Submit</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -342,5 +347,21 @@ const styles = StyleSheet.create({
 
     checkbox: {
         
+    },
+
+    traversalCheckContainer: {
+        marginTop: 5
+    },
+
+    submit: {
+        fontSize: 35,
+        width: "95%",
+        backgroundColor: "#FFD27A",
+        borderRadius: 100,
+        padding: "2%",
+        left: "2.5%",
+        justifyContent: "center",
+        textAlign: "center",
+        marginTop: 30
     }
 })

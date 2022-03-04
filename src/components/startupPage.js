@@ -48,23 +48,6 @@ export default function StartupPage({ navigation }) {
 
       {/* Bottom Row Icons */}
       <View style={styles.rowIcons}>
-        {/* Camera Icon */}
-        <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
-          <Image
-            source={require("../assets/images/startPage/cam-transp.png")}
-            onPress={() => navigation.navigate("Autonomous")}
-          />
-        </TouchableOpacity>
-        {/* Analysis Icon */}
-        <TouchableOpacity onPress={() => navigation.navigate("Analysis")}>
-          <Image
-            source={require("../assets/images/startPage/analysis-icon.png")}
-          />
-        </TouchableOpacity>
-        {/* List Icon */}
-        <TouchableOpacity onPress={() => navigation.navigate("TierList")}>
-          <Image source={require("../assets/images/startPage/list-icon.png")} />
-        </TouchableOpacity>
         {/* Settings Icon */}
         <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
           <Image
@@ -131,9 +114,9 @@ const styles = StyleSheet.create({
 
   rowIcons: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     bottom: Dimensions.get("screen").height * 0.05,
-    width: '75%'
+    width: '100%'
   },
 });
