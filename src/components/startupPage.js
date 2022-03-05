@@ -40,6 +40,8 @@ export default function StartupPage({ navigation }) {
         setToNavigate("Settings")
         return;
       }
+
+      setToNavigate("Pregame")
     }
 
     checkSettings();
