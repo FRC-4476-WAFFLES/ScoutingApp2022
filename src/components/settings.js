@@ -154,7 +154,7 @@ export default function StartupPage({ navigation }) {
     setShowMatchSchedule(!showMatchSchedule);
     let scheduleRead = await FileSystem.readAsStringAsync(scheduleFileUri);
     let scheduleJSON = await JSON.parse(scheduleRead);
-    let scheduleString = JSON.stringify(scheduleJSON);
+    let scheduleString = JSON.stringify(scheduleJSON, null, '\t');
     setMatchScheduleString(scheduleString)
   }
 
