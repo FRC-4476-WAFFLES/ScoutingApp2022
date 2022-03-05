@@ -11,38 +11,44 @@ import {
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { Header } from "react-native/Libraries/NewAppScreen";
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from "expo-file-system";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 import PageTitle from "./PageTitle";
 import StartingPosition from "./StartingPosition";
 import SquareButton from "./SquareButton";
+import { Dimensions } from "react-native-web";
 
 const positions = ["LEFT", "CENTER", "RIGHT"];
 const startingPositions = {
-  "LEFT": 'l',
-  "CENTER": 'c',
-  "RIGHT": 'r'
-}
+  LEFT: "l",
+  CENTER: "c",
+  RIGHT: "r",
+};
 
 const apiStations = {
-  "R1": "Red1",
-  "R2": "Red2",
-  "R3": "Red3",
-  "B1": "Blue1",
-  "B2": "Blue2",
-  "B3": "Blue3"
-}
+  R1: "Red1",
+  R2: "Red2",
+  R3: "Red3",
+  B1: "Blue1",
+  B2: "Blue2",
+  B3: "Blue3",
+};
 
 export default function PregamePage({ navigation }) {
-  const [matchNum, setMatchNum] = React.useState('');
-  const [teamNum, setTeamNum] = React.useState('');
+  const [matchNum, setMatchNum] = React.useState("");
+  const [teamNum, setTeamNum] = React.useState("");
 
   const [selectedPosition, setSelectedPosition] = React.useState(0);
 
-  const scheduleFileUri = `${FileSystem.documentDirectory}${'MatchSchedule.json'}`;
-  const settingsFileUri = `${FileSystem.documentDirectory}${'ScoutingAppSettings.json'}`
+  const scheduleFileUri = `${
+    FileSystem.documentDirectory
+  }${"MatchSchedule.json"}`;
+  const settingsFileUri = `${
+    FileSystem.documentDirectory
+  }${"ScoutingAppSettings.json"}`;
 
-  const docDir = `${FileSystem.documentDirectory}`
+  const docDir = `${FileSystem.documentDirectory}`;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -51,7 +57,7 @@ export default function PregamePage({ navigation }) {
           <PageTitle title="Pre-Game" />
           <Image />
         </View>
-        
+
         <Text style={styles.header2}>Match #</Text>
         <TextInput
           style={styles.input}
@@ -64,7 +70,7 @@ export default function PregamePage({ navigation }) {
         <TouchableOpacity onPress={findMatch}>
           <Text style={styles.findMatch}>Find Match</Text>
         </TouchableOpacity>
-        
+
         <Text style={styles.header}>You are scouting Team...</Text>
         <Text style={styles.header}>{teamNum}</Text>
 
@@ -78,15 +84,14 @@ export default function PregamePage({ navigation }) {
               selected={selectedPosition === position}
               singleTap={(valueTap) => setSelectedPosition(valueTap)}
             />
-          ))}    
+          ))}
         </View>
-        
-        
+
         <TouchableOpacity
           onPress={async () => {
             await submitPrematch();
             navigation.navigate("Match", {
-              match: parseInt(matchNum)
+              match: parseInt(matchNum),
             });
           }}
         >
@@ -95,25 +100,29 @@ export default function PregamePage({ navigation }) {
       </ScrollView>
     </SafeAreaView>
   );
-  
+
   async function findMatch() {
-    let settingsJSON = await JSON.parse(await FileSystem.readAsStringAsync(settingsFileUri));
+    let settingsJSON = await JSON.parse(
+      await FileSystem.readAsStringAsync(settingsFileUri)
+    );
     let position = await settingsJSON["Settings"]["driverStation"];
 
     let jsontext = await FileSystem.readAsStringAsync(scheduleFileUri);
     let matchjson = await JSON.parse(jsontext);
     let teams = await matchjson["Schedule"][parseInt(matchNum) - 1]["teams"];
-    
-    await teams.forEach(team => {
+
+    await teams.forEach((team) => {
       if (team["station"] == apiStations[position]) {
-        setTeamNum(parseInt(team["teamNumber"]))
+        setTeamNum(parseInt(team["teamNumber"]));
         return;
       }
-    })
+    });
   }
 
   async function submitPrematch() {
-    let settingsJSON = await JSON.parse(await FileSystem.readAsStringAsync(settingsFileUri));
+    let settingsJSON = await JSON.parse(
+      await FileSystem.readAsStringAsync(settingsFileUri)
+    );
 
     let team = teamNum;
     let match = matchNum;
@@ -122,7 +131,7 @@ export default function PregamePage({ navigation }) {
     let allianceKey = `${await alliance}${match}`;
     let scout = await settingsJSON["Settings"]["scoutName"];
     let startPos = startingPositions[selectedPosition];
-    
+
     let tmaKey = `${team}-${allianceKey}`;
 
     let csvText = `${team},${match},${tmaKey},${position},${alliance},${allianceKey},${scout},${startPos},`;
@@ -141,13 +150,13 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    fontSize: 48,
+    fontSize: RFPercentage(4),
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     textAlign: "center",
   },
 
   header2: {
-    fontSize: 35,
+    fontSize: RFPercentage(4),
     left: "5%",
     paddingTop: "2%",
   },
@@ -157,7 +166,7 @@ const styles = StyleSheet.create({
     width: "80%",
     backgroundColor: "#FFBCBC",
     borderRadius: 10,
-    marginTop: 15,
+    marginTop: "5%",
     padding: "2%",
     left: "10%",
     justifyContent: "center",
@@ -174,6 +183,7 @@ const styles = StyleSheet.create({
     left: "2.5%",
     justifyContent: "center",
     textAlign: "center",
+    marginBottom: "5%",
   },
 
   startPosContainer: {
@@ -185,14 +195,14 @@ const styles = StyleSheet.create({
   },
 
   findMatch: {
-    fontSize: 25,
+    fontSize: RFPercentage(3),
     width: "50%",
     backgroundColor: "#FFD27A",
     borderRadius: 100,
     padding: "2%",
-    left: 140,
+    left: "25%",
     justifyContent: "center",
     textAlign: "center",
-    marginBottom: 20
-  }
+    marginBottom: "5%",
+  },
 });

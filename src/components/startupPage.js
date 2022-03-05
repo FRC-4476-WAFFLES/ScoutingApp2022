@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    marginTop: 20,
+    // marginTop: 20,
     borderRadius: 100,
     padding: 10,
     backgroundColor: "white",
@@ -102,14 +102,14 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     alignContent: "flex-start",
-    marginRight: 100,
+    marginRight: Dimensions.get("screen").width * 0.05,
   },
 
   buttonImageDababy: {
     width: 30,
     height: 30,
     alignContent: "flex-end",
-    marginLeft: 100,
+    marginLeft: Dimensions.get("screen").width * 0.05,
   },
 
   rowIcons: {
@@ -117,6 +117,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     bottom: Dimensions.get("screen").height * 0.05,
-    width: '100%'
+    width: "100%",
   },
 });
