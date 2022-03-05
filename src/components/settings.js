@@ -29,6 +29,11 @@ export default function StartupPage({ navigation }) {
 
   const [driverStation, setDriverStation] = React.useState("");
 
+  const [matchScheduleExists, setMatchScheduleExists] = React.useState(false);
+  const [showMatchSchedule, setShowMatchSchedule] = React.useState(false);
+
+  const [matchScheduleString, setMatchScheduleString] = React.useState("");
+
   const scheduleFileUri = `${
     FileSystem.documentDirectory
   }${"MatchSchedule.json"}`;
@@ -49,7 +54,14 @@ export default function StartupPage({ navigation }) {
       }
     }
 
-    setSettingsVars();
+    async function checkMatchScheduleExists() {
+      let tmp = await FileSystem.getInfoAsync(scheduleFileUri);
+      console.log(`Match Schedule Exists: ${tmp.exists}`)
+      setMatchScheduleExists(tmp.exists);
+    }
+
+    await setSettingsVars();
+    await checkMatchScheduleExists();
   }, []);
 
   return (
@@ -73,6 +85,24 @@ export default function StartupPage({ navigation }) {
               <Text style={styles.heading2}>Import Event Match Schedule</Text>
             </TouchableOpacity>
           </View>
+          {
+              matchScheduleExists ? 
+              <View>
+                <TouchableOpacity onPress={() => fetchScheduleJSON()}>
+                  <Text>View Current Match Schedule</Text>
+                </TouchableOpacity>
+                {
+                  showMatchSchedule && matchScheduleString != "" && 
+                  <View style={styles.showMatchSchedule}>
+                    <Text>{matchScheduleString}</Text>
+                  </View>
+                }
+              </View>
+              :
+              <View>
+                <Text>Match Schedule Does Not Exist</Text>
+              </View>
+          }
         </View>
 
         <View>
@@ -119,6 +149,14 @@ export default function StartupPage({ navigation }) {
       </ScrollView>
     </SafeAreaView>
   );
+
+  async function fetchScheduleJSON() {
+    setShowMatchSchedule(!showMatchSchedule);
+    let scheduleRead = await FileSystem.readAsStringAsync(scheduleFileUri);
+    let scheduleJSON = await JSON.parse(scheduleRead);
+    let scheduleString = JSON.stringify(scheduleJSON);
+    setMatchScheduleString(scheduleString)
+  }
 
   async function saveSettings() {
     let theJSON = `
@@ -247,4 +285,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: Dimensions.get("window").height * 0.05,
   },
+
+  showMatchSchedule: {
+    backgroundColor: 'white',
+    width: '80%',
+    height: '80%',
+    top: '10%',
+    left: '10%',
+    borderRadius: 10
+  }
 });
