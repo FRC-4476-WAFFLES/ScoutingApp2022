@@ -126,7 +126,7 @@ export default function PregamePage({ navigation }) {
   async function submitPrematch() {
     let tmp = await FileSystem.getInfoAsync(settingsFileUri);
     if (!tmp.exists) {
-      setToNavigate("Settings")
+      setToNavigate("Settings");
       return;
     }
 
@@ -141,7 +141,7 @@ export default function PregamePage({ navigation }) {
     let allianceKey = `${await alliance}${match}`;
     let scout = await settingsJSON["Settings"]["scoutName"];
     //let startPos = await startingPositions[selectedPosition];
-    let startPos = 'N/A'
+    let startPos = "N/A";
 
     let tmaKey = `${team}-${allianceKey}`;
 
