@@ -71,6 +71,7 @@ export default function StartupPage({ navigation }) {
 
         <View>
           <Text style={styles.heading1}>Event Code</Text>
+          <Text style={styles.headingWarning}>DO NOT TOUCH IF SCOUTING AT MATCH</Text>
           <TextInput
             style={styles.codeInput}
             onChangeText={setCodeText}
@@ -105,6 +106,7 @@ export default function StartupPage({ navigation }) {
 
         <View>
           <Text style={styles.heading1}>Scout Name</Text>
+          <Text style={styles.headingWarning}>*MUST SET</Text>
           <TextInput
             style={styles.nameInput}
             onChangeText={setNameText}
@@ -115,6 +117,7 @@ export default function StartupPage({ navigation }) {
 
         <View>
           <Text style={styles.heading1}>Driverstation</Text>
+          <Text style={styles.headingWarning}>*MUST SET</Text>
           <View style={styles.pickerContainer}>
             <View style={styles.picker}>
               <Picker
@@ -216,12 +219,20 @@ const styles = StyleSheet.create({
     fontSize: Dimensions.get("window").width * 0.08,
     fontWeight: "bold",
     marginHorizontal: 15,
-    marginVertical: 15,
+    marginVertical: 10,
   },
 
   heading2: {
     fontSize: Dimensions.get("window").width * 0.05,
     fontStyle: "italic",
+  },
+
+  headingWarning: {
+    fontSize: Dimensions.get("window").width * 0.04,
+    fontWeight: "bold",
+    marginHorizontal: 15,
+    marginTop: -15,
+    marginBottom: 10
   },
 
   codeInput: {

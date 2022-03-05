@@ -10,8 +10,41 @@ import {
   Dimensions,
   StatusBar,
 } from "react-native";
+import * as FileSystem from "expo-file-system";
 
 export default function StartupPage({ navigation }) {
+  const [toNavigate, setToNavigate] = React.useState("Pregame");
+
+  const settingsFileUri = `${
+    FileSystem.documentDirectory
+  }${"ScoutingAppSettings.json"}`;
+  
+  React.useEffect(() => {
+    async function checkSettings() {
+      let tmp = await FileSystem.getInfoAsync(settingsFileUri);
+      if (!tmp.exists) {
+        setToNavigate("Settings")
+        return;
+      }
+  
+      let settingsJSON = await JSON.parse(
+        await FileSystem.readAsStringAsync(settingsFileUri)
+      );
+  
+      let position = await settingsJSON["Settings"]["driverStation"];
+      let scout = await settingsJSON["Settings"]["scoutName"];
+  
+      console.log(`Position: ${position}, Scout: ${scout}`)
+  
+      if (position == "" || scout == "") {
+        setToNavigate("Settings")
+        return;
+      }
+    }
+
+    checkSettings();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Background and title */}
@@ -25,7 +58,9 @@ export default function StartupPage({ navigation }) {
       {/* LESS GO button */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Pregame")}
+        onPress={() => {
+          navigation.navigate(toNavigate);
+        }}
       >
         <View>
           <Text style={styles.buttonText}>

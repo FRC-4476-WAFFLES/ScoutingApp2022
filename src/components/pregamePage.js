@@ -36,6 +36,8 @@ const apiStations = {
 };
 
 export default function PregamePage({ navigation }) {
+  const [toNavigate, setToNavigate] = React.useState("Match");
+
   const [matchNum, setMatchNum] = React.useState("");
   const [teamNum, setTeamNum] = React.useState("");
 
@@ -74,6 +76,7 @@ export default function PregamePage({ navigation }) {
         <Text style={styles.header}>You are scouting Team...</Text>
         <Text style={styles.header}>{teamNum}</Text>
 
+        {/*
         <Text style={styles.header2}>Starting Position</Text>
         <View style={styles.startPosContainer}>
           {positions.map((position) => (
@@ -86,11 +89,12 @@ export default function PregamePage({ navigation }) {
             />
           ))}
         </View>
+          */}
 
         <TouchableOpacity
           onPress={async () => {
             await submitPrematch();
-            navigation.navigate("Match", {
+            navigation.navigate(toNavigate, {
               match: parseInt(matchNum),
             });
           }}
@@ -120,6 +124,12 @@ export default function PregamePage({ navigation }) {
   }
 
   async function submitPrematch() {
+    let tmp = await FileSystem.getInfoAsync(settingsFileUri);
+    if (!tmp.exists) {
+      setToNavigate("Settings")
+      return;
+    }
+
     let settingsJSON = await JSON.parse(
       await FileSystem.readAsStringAsync(settingsFileUri)
     );
@@ -130,7 +140,8 @@ export default function PregamePage({ navigation }) {
     let alliance = await settingsJSON["Settings"]["driverStation"].charAt(0);
     let allianceKey = `${await alliance}${match}`;
     let scout = await settingsJSON["Settings"]["scoutName"];
-    let startPos = startingPositions[selectedPosition];
+    //let startPos = await startingPositions[selectedPosition];
+    let startPos = 'N/A'
 
     let tmaKey = `${team}-${allianceKey}`;
 
