@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
   commentIconContainer: {
     position: "absolute",
     right: "2.5%",
-    top: Platform.OS === "android" ? 25 : 2,
+    top: Platform.OS === "android" ? 35 : 2,
     backgroundColor: "#C4C4C4",
     padding: 13,
     borderRadius: 100,
@@ -324,10 +324,10 @@ const styles = StyleSheet.create({
   commentBox: {
     backgroundColor: "white",
     position: "absolute",
-    right: Dimensions.get("window").width / 2,
+    right: "15%",
     top: Platform.OS === "android" ? 80 : 55,
-    width: 450,
-    height: 700,
+    width: "75%",
+    height: "70%",
     zIndex: 999,
     borderWidth: 7,
     borderRadius: 12,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
 
   commentInput: {
     width: "100%",
-    height: "100%",
+    height: "88%",
     padding: 5,
     fontSize: 25,
     fontWeight: "bold",
@@ -427,7 +427,7 @@ const styles = StyleSheet.create({
   },
 
   submit: {
-    fontSize: 35,
+    fontSize: RFPercentage(4),
     width: "95%",
     backgroundColor: "#FFD27A",
     borderRadius: 100,
@@ -435,6 +435,7 @@ const styles = StyleSheet.create({
     left: "2.5%",
     justifyContent: "center",
     textAlign: "center",
-    marginTop: 30,
+    marginTop: "5%",
+    marginBottom: "5%",
   },
 });
