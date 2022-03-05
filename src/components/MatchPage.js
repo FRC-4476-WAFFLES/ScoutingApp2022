@@ -247,6 +247,24 @@ export default function MatchPage({ route, navigation }) {
     let csvURI = `${FileSystem.documentDirectory}match${match}.csv`;
 
     let currData = await FileSystem.readAsStringAsync(csvURI);
+    
+    let commaIndex = 0;
+    let commas = 0;
+    for (i = 0; i < currData.length; i++) {
+      if (currData.charAt(i) == ',') {
+        commas++;
+      }
+
+      if (commas == 8) {
+        commaIndex = i;
+        console.log(commaIndex)
+        break;
+      }
+    }
+
+    currData = currData.slice(0, commaIndex + 1);
+    console.log(`currData: ${currData}`)
+
     currData += `${autoUpperBalls},${autoLowerBalls},${teleOpUpperBalls},${teleOpLowerBalls},${+isTraversalChecked},${
       commentValue === `` ? 0 : commentValue
     }`;

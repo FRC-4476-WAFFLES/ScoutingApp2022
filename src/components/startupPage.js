@@ -19,6 +19,7 @@ export default function StartupPage({ navigation }) {
     FileSystem.documentDirectory
   }${"ScoutingAppSettings.json"}`;
   
+  /*
   React.useEffect(() => {
     async function checkSettings() {
       let tmp = await FileSystem.getInfoAsync(settingsFileUri);
@@ -36,7 +37,12 @@ export default function StartupPage({ navigation }) {
   
       console.log(`Position: ${position}, Scout: ${scout}`)
   
-      if (position == "" || scout == "") {
+      if (position == "") {
+        setToNavigate("Settings")
+        return;
+      }
+
+      if (scout == "") {
         setToNavigate("Settings")
         return;
       }
@@ -46,6 +52,7 @@ export default function StartupPage({ navigation }) {
 
     checkSettings();
   }, []);
+  */
 
   return (
     <SafeAreaView style={styles.container}>
