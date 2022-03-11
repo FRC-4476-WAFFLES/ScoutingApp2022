@@ -77,31 +77,6 @@ export default function MatchPage({ route, navigation }) {
             <View style={styles.child}>
               <View style={styles.hubInput}>
                 <Text style={styles.text}>
-                  {autoLowerBalls} Balls scored in Lower Hub
-                </Text>
-                <View style={styles.ballButtons}>
-                  <TouchableOpacity
-                    style={[styles.roundButton, styles.minusButton]}
-                    onPress={() => updateAutoLowerBalls(-1)}
-                  >
-                    <Image
-                      source={require("../assets/images/minus-icon.png")}
-                      style={styles.buttonIcon}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.roundButton, styles.plusButton]}
-                    onPress={() => updateAutoLowerBalls(1)}
-                  >
-                    <Image
-                      source={require("../assets/images/plus-icon.png")}
-                      style={styles.buttonIcon}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <View style={styles.hubInput}>
-                <Text style={styles.text}>
                   {autoUpperBalls} Balls scored in Upper Hub
                 </Text>
                 <View style={styles.ballButtons}>
@@ -117,6 +92,31 @@ export default function MatchPage({ route, navigation }) {
                   <TouchableOpacity
                     style={[styles.roundButton, styles.plusButton]}
                     onPress={() => updateAutoUpperBalls(1)}
+                  >
+                    <Image
+                      source={require("../assets/images/plus-icon.png")}
+                      style={styles.buttonIcon}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={styles.hubInput}>
+                <Text style={styles.text}>
+                  {autoLowerBalls} Balls scored in Lower Hub
+                </Text>
+                <View style={styles.ballButtons}>
+                  <TouchableOpacity
+                    style={[styles.roundButton, styles.minusButton]}
+                    onPress={() => updateAutoLowerBalls(-1)}
+                  >
+                    <Image
+                      source={require("../assets/images/minus-icon.png")}
+                      style={styles.buttonIcon}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.roundButton, styles.plusButton]}
+                    onPress={() => updateAutoLowerBalls(1)}
                   >
                     <Image
                       source={require("../assets/images/plus-icon.png")}
@@ -144,31 +144,6 @@ export default function MatchPage({ route, navigation }) {
             <View style={styles.child}>
               <View style={styles.hubInput}>
                 <Text style={styles.text}>
-                  {teleOpLowerBalls} Balls scored in Lower Hub
-                </Text>
-                <View style={styles.ballButtons}>
-                  <TouchableOpacity
-                    style={[styles.roundButton, styles.minusButton]}
-                    onPress={() => updateTeleOpLowerBalls(-1)}
-                  >
-                    <Image
-                      source={require("../assets/images/minus-icon.png")}
-                      style={styles.buttonIcon}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.roundButton, styles.plusButton]}
-                    onPress={() => updateTeleOpLowerBalls(1)}
-                  >
-                    <Image
-                      source={require("../assets/images/plus-icon.png")}
-                      style={styles.buttonIcon}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <View style={styles.hubInput}>
-                <Text style={styles.text}>
                   {teleOpUpperBalls} Balls scored in Upper Hub
                 </Text>
                 <View style={styles.ballButtons}>
@@ -184,6 +159,31 @@ export default function MatchPage({ route, navigation }) {
                   <TouchableOpacity
                     style={[styles.roundButton, styles.plusButton]}
                     onPress={() => updateTeleOpUpperBalls(1)}
+                  >
+                    <Image
+                      source={require("../assets/images/plus-icon.png")}
+                      style={styles.buttonIcon}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={styles.hubInput}>
+                <Text style={styles.text}>
+                  {teleOpLowerBalls} Balls scored in Lower Hub
+                </Text>
+                <View style={styles.ballButtons}>
+                  <TouchableOpacity
+                    style={[styles.roundButton, styles.minusButton]}
+                    onPress={() => updateTeleOpLowerBalls(-1)}
+                  >
+                    <Image
+                      source={require("../assets/images/minus-icon.png")}
+                      style={styles.buttonIcon}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.roundButton, styles.plusButton]}
+                    onPress={() => updateTeleOpLowerBalls(1)}
                   >
                     <Image
                       source={require("../assets/images/plus-icon.png")}
