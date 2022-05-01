@@ -12,6 +12,9 @@ import {
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import * as FileSystem from "expo-file-system";
+import * as MediaLibrary from 'expo-media-library';
+import * as Permissions from 'expo-permissions';
+import * as Clipboard from 'expo-clipboard';
 
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
@@ -271,6 +274,18 @@ export default function MatchPage({ route, navigation }) {
 
     await FileSystem.writeAsStringAsync(csvURI, currData);
     console.log(await FileSystem.readAsStringAsync(csvURI));
+
+    Clipboard.setString(currData);
+
+    // const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    
+    // if (status === "granted") {
+    //   console.log(csvURI);
+    //   await FileSystem.writeAsStringAsync(csvURI, currData, { encoding: FileSystem.EncodingType.UTF8 });
+    //   //console.log(await FileSystem.readAsStringAsync(csvURI));
+    //   const asset = await MediaLibrary.createAssetAsync(csvURI)
+    //   await MediaLibrary.createAlbumAsync("Download", asset, false)
+    // }
   }
 
   async function getDataString() {
