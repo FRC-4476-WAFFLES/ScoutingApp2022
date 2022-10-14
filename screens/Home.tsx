@@ -11,13 +11,14 @@ import {
     StatusBar,
     Platform,
 } from "react-native";
-import { useNavigation } from '@react-navigation/native';
 
-import { colors } from "../components/colors";
 import { ScreenHeight, ScreenWidth } from "../components/shared";
-import { IStackScreenProps } from "../library/StackScreenProps";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import StackParamList from "../library/StackParamList";
 
-const HomeScreen: React.FunctionComponent<IStackScreenProps> = props => {
+type HomeScreenProps = NativeStackScreenProps<StackParamList, "Home">
+
+const HomeScreen: React.FunctionComponent<HomeScreenProps> = props => {
     const { navigation, route } = props;
 
     const [toNavigate, setToNavigate] = React.useState("Pregame");
@@ -36,7 +37,7 @@ const HomeScreen: React.FunctionComponent<IStackScreenProps> = props => {
         <TouchableOpacity
           style={styles.button}
           onPress={() =>
-            navigation.navigate(toNavigate)
+            navigation.navigate("Pregame")
           }
         >
           <View>
