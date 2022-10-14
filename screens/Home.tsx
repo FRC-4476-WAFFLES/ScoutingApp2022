@@ -15,10 +15,12 @@ import { useNavigation } from '@react-navigation/native';
 
 import { colors } from "../components/colors";
 import { ScreenHeight, ScreenWidth } from "../components/shared";
+import { IStackScreenProps } from "../library/StackScreenProps";
 
-const HomeScreen = () => {
-    const navigation = useNavigation();
+const HomeScreen: React.FunctionComponent<IStackScreenProps> = props => {
+    const { navigation, route } = props;
 
+    const [toNavigate, setToNavigate] = React.useState("Pregame");
 
     return (
       <SafeAreaView style={styles.container}>
@@ -33,9 +35,9 @@ const HomeScreen = () => {
         {/* LESS GO button */}
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {
-            //navigation.navigate(toNavigate);
-          }}
+          onPress={() =>
+            navigation.navigate(toNavigate)
+          }
         >
           <View>
             <Text style={styles.buttonText}>
