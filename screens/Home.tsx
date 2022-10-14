@@ -16,7 +16,7 @@ import { ScreenHeight, ScreenWidth } from "../components/shared";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import StackParamList from "../library/StackParamList";
 
-type HomeScreenProps = NativeStackScreenProps<StackParamList, "Home">
+type HomeScreenProps = NativeStackScreenProps<StackParamList, "Home">;
 
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = props => {
     const { navigation, route } = props;
