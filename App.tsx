@@ -1,9 +1,8 @@
-import { NavigationContainer } from '@react-navigation/native';
+import React from "react";
+import AppStack from "./navigation/AppStack";
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      
-    </NavigationContainer>
-  );
+const App = () => {
+  return <AppStack />
 }
+
+export default App;
