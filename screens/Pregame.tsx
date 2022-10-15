@@ -15,9 +15,8 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as FileSystem from "expo-file-system";
 
-
 import StackParamList from "../library/StackParamList";
-
+import ScreenTitle from "../components/ScreenTitle";
 
 type PregameScreenProps = NativeStackScreenProps<StackParamList, "Pregame">;
 
@@ -60,8 +59,7 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
         <SafeAreaView style={styles.container}>
         <ScrollView>
           <View>
-            {/* <PageTitle title="Pre-Game" />
-            <Image /> */}
+            <ScreenTitle title="Pre-Game" />
           </View>
   
           <Text style={styles.header2}>Match #</Text>
