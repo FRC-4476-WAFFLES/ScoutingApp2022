@@ -73,14 +73,6 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
                 
                 <ScreenTitle title="Settings" />
 
-                <TouchableOpacity 
-                    style={styles.button}
-                    onPress={() => setShowPicker(!showPicker)}
-                >
-                    <Text style={styles.driversationText}>{driverstation ? driverstation : 'Driverstation...'}</Text>
-                </TouchableOpacity>
-
-
                 <View>
                     <Text style={styles.heading1}>Event Code</Text>
                     <Text style={styles.headingWarning}>DO NOT TOUCH IF SCOUTING AT MATCH</Text>
@@ -100,6 +92,12 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
                     </View>
                 </View>
 
+                <TouchableOpacity 
+                    style={styles.button}
+                    onPress={() => setShowPicker(!showPicker)}
+                >
+                    <Text style={styles.driversationText}>{driverstation ? driverstation : 'Driverstation...'}</Text>
+                </TouchableOpacity>
 
                 {
                 
@@ -170,13 +168,33 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
                 >
                     <Text style={styles.save}>Save</Text>
                 </TouchableOpacity>
+
+                { // For Development Purposes
+                
+                /* <TouchableOpacity
+                    onPress={async () => {
+                        try {
+                            await FileSystem.deleteAsync(scheduleFileUri);
+                        } catch (e) { console.log(e) };
+                        
+                        try {
+                            await FileSystem.deleteAsync(settingsFileUri);
+                        } catch (e) { console.log(e) };
+
+                        setDriverstation(undefined);
+                        setCodeText(undefined);
+                    }}
+                >
+                    <Text style={styles.clear}>Clear Data</Text>
+                </TouchableOpacity> */}
                 
             </ScrollView>
         </SafeAreaView>
     );
 
     function onDriverstationPressed(driverstation: string) {
-        setDriverstation(driverstation)
+        setDriverstation(driverstation);
+        setShowPicker(false);
     }
 
     async function fetchScheduleJSON() {
@@ -248,7 +266,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 30,
         backgroundColor: "#FFD27A",
-        borderRadius: 100
+        borderRadius: 100,
+        marginTop: 40,
     },
     driversationText: {
         fontSize: 35,
@@ -363,6 +382,18 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         textAlign: "center",
         marginTop: Dimensions.get("window").height * 0.05,
+    },
+
+    clear: {
+        fontSize: Dimensions.get("window").width * 0.03,
+        width: "60%",
+        backgroundColor: "#ff4a4a",
+        borderRadius: 100,
+        padding: "2%",
+        left: Dimensions.get("window").width * 0.2,
+        justifyContent: "center",
+        textAlign: "center",
+        marginTop: Dimensions.get("window").height * 0.02,    
     },
 
     showMatchSchedule: {
