@@ -15,7 +15,6 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as FileSystem from "expo-file-system";
 
 import StackParamList from "../library/StackParamList";
-import DriverstationPicker from "../components/DriverstationPicker";
 import ScreenTitle from "../components/ScreenTitle";
 
 type SettingsScreenProps = NativeStackScreenProps<StackParamList, "Settings">;
