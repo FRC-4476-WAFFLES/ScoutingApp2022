@@ -8,7 +8,8 @@ import {
     ScrollView,
     TouchableWithoutFeedback,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
+    TextInput,
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as FileSystem from "expo-file-system";
@@ -22,16 +23,16 @@ type SettingsScreenProps = NativeStackScreenProps<StackParamList, "Settings">;
 const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
     const { navigation, route } = props;
 
-    const [codeText, setCodeText] = React.useState<String>();
-    const [nameText, setNameText] = React.useState<String>();
+    const [codeText, setCodeText] = React.useState<string>();
+    const [nameText, setNameText] = React.useState<string>();
 
-    const [jsonText, setJsonText] = React.useState<String>();
+    const [jsonText, setJsonText] = React.useState<string>();
     const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
 
     const [matchScheduleExists, setMatchScheduleExists] = React.useState<boolean>(false);
     const [showMatchSchedule, setShowMatchSchedule] = React.useState<boolean>(false);
     
-    const [matchScheduleString, setMatchScheduleString] = React.useState<String>();
+    const [matchScheduleString, setMatchScheduleString] = React.useState<string>();
 
     const scheduleFileUri = `${
         FileSystem.documentDirectory
@@ -80,7 +81,26 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
                     <Text style={styles.driversationText}>{driverstation ? driverstation : 'Driverstation...'}</Text>
                 </TouchableOpacity>
 
-                
+
+                <View>
+                    <Text style={styles.heading1}>Event Code</Text>
+                    <Text style={styles.headingWarning}>DO NOT TOUCH IF SCOUTING AT MATCH</Text>
+                    <TextInput
+                        style={styles.codeInput}
+                        onChangeText={setCodeText}
+                        value={codeText}
+                        placeholder="Event Code"
+                    />
+                    <View style={styles.importSchedule}>
+                        <TouchableOpacity
+                            style={styles.importScheduleButton}
+                            onPress={downloadMatchSchedule}
+                        >
+                        <Text style={styles.heading2}>Import Event Match Schedule</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
 
                 {
                 
@@ -142,6 +162,15 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
                 </View>  
 
                 }
+
+                <TouchableOpacity
+                    onPress={async () => {
+                        await saveSettings();
+                        // navigation.navigate("Startup");
+                    }}
+                >
+                    <Text style={styles.save}>Save</Text>
+                </TouchableOpacity>
                 
             </ScrollView>
         </SafeAreaView>
@@ -149,6 +178,63 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
 
     function onDriverstationPressed(driverstation: string) {
         setDriverstation(driverstation)
+    }
+
+    async function fetchScheduleJSON() {
+        setShowMatchSchedule(!showMatchSchedule);
+        let scheduleRead = await FileSystem.readAsStringAsync(scheduleFileUri);
+        let scheduleJSON = await JSON.parse(scheduleRead);
+        let scheduleString = JSON.stringify(scheduleJSON, null, "\t");
+        setMatchScheduleString(scheduleString);
+    }
+    
+    async function saveSettings() {
+        let theJSON = `
+            {
+                "Settings": {
+                    "scoutName": "${nameText}",
+                    "driverStation": "${driverstation}"
+                }
+            }
+        `;
+    
+        await FileSystem.writeAsStringAsync(settingsFileUri, theJSON);
+        
+        console.log(await FileSystem.readAsStringAsync(settingsFileUri));
+    }
+    
+    async function downloadMatchSchedule() {
+        await getMatchSchedule();
+        if (!jsonText) return;
+        let theJSON = JSON.stringify(await JSON.parse(jsonText), null, "\t");
+        await FileSystem.writeAsStringAsync(scheduleFileUri, theJSON);
+        console.log(await FileSystem.readAsStringAsync(scheduleFileUri));
+    }
+
+    async function getMatchSchedule() {
+        var base64 = require("base-64");
+    
+        var username = "faiazumaer";
+        var password = "5fecfbc3-09ce-45a0-bad2-769fd4006781";
+    
+        var requestOptions: RequestInit = {
+            method: "GET",
+            headers: {
+                Authorization: "Basic " + base64.encode(username + ":" + password),
+                "If-Modified-Since": "",
+            },
+            redirect: "follow",
+        };
+    
+        const response = await fetch(
+            `https://frc-api.firstinspires.org/v3.0/2022/schedule/${codeText}?tournamentLevel=qual`,
+            requestOptions
+        )
+          .then((res) => res.text())
+          .then((data) => {
+            setJsonText(data);
+          })
+          .catch((error) => console.log(error));
     }
 }
 
@@ -201,7 +287,93 @@ const styles = StyleSheet.create({
     pickerText: {
         fontSize: 30,
         fontWeight: 'bold'
-    }
+    },
+
+    heading1: {
+        fontSize: Dimensions.get("window").width * 0.08,
+        fontWeight: "bold",
+        marginHorizontal: 15,
+        marginVertical: 10,
+        },
+
+    heading2: {
+        fontSize: Dimensions.get("window").width * 0.05,
+        fontStyle: "italic",
+    },
+
+    headingWarning: {
+        fontSize: Dimensions.get("window").width * 0.04,
+        fontWeight: "bold",
+        marginHorizontal: 15,
+        marginTop: -15,
+        marginBottom: 10
+    },
+
+    codeInput: {
+        fontSize: Dimensions.get("window").width * 0.05,
+        width: "80%",
+        backgroundColor: "#FFBCBC",
+        borderRadius: 10,
+        marginTop: 15,
+        padding: "2%",
+        left: "10%",
+        justifyContent: "center",
+        textAlign: "center",
+        marginBottom: "5%",
+    },
+
+    nameInput: {
+        fontSize: Dimensions.get("window").width * 0.05,
+        width: "80%",
+        backgroundColor: "#FFBCBC",
+        borderRadius: 10,
+        padding: "2%",
+        left: "10%",
+        justifyContent: "center",
+        textAlign: "center",
+        marginBottom: "5%",
+    },
+
+    importSchedule: {
+        width: Dimensions.get("window").width * 0.8,
+        height: 85,
+        backgroundColor: "#F5A900",
+        marginLeft: Dimensions.get("window").width * 0.1,
+        justifyContent: "center",
+        textAlign: "center",
+        alignItems: "center",
+    },
+
+    importScheduleButton: {
+
+    },
+
+    pickerContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+        transform: [{ scaleX: 2 }, { scaleY: 2 }],
+    },
+
+    save: {
+        fontSize: Dimensions.get("window").width * 0.06,
+        width: "95%",
+        backgroundColor: "#FFD27A",
+        borderRadius: 100,
+        padding: "2%",
+        left: Dimensions.get("window").width * 0.025,
+        justifyContent: "center",
+        textAlign: "center",
+        marginTop: Dimensions.get("window").height * 0.05,
+    },
+
+    showMatchSchedule: {
+        backgroundColor: "white",
+        width: "80%",
+        height: "80%",
+        top: "10%",
+        left: "10%",
+        borderRadius: 10,
+    },
 })
 
 export default SettingsScreen;
