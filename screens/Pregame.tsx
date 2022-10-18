@@ -8,9 +8,10 @@ import {
     StyleSheet,
     StatusBar,
     Image,
-    Platform
+    Platform,
+    TouchableOpacity,
+    TextInput
 } from "react-native";
-import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as FileSystem from "expo-file-system";
@@ -25,8 +26,8 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
 
     const [toNavigate, setToNavigate] = React.useState("Match");
 
-    const [matchNum, setMatchNum] = React.useState("");
-    const [teamNum, setTeamNum] = React.useState("");
+    const [matchNum, setMatchNum] = React.useState<number>();
+    const [teamNum, setTeamNum] = React.useState<number>();
   
     const [selectedPosition, setSelectedPosition] = React.useState(0);
 
@@ -41,18 +42,18 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
 
     const positions = ["LEFT", "CENTER", "RIGHT"];
     const startingPositions = {
-    LEFT: "l",
-    CENTER: "c",
-    RIGHT: "r",
+      LEFT: "l",
+      CENTER: "c",
+      RIGHT: "r",
     };
 
     const apiStations = {
-    R1: "Red1",
-    R2: "Red2",
-    R3: "Red3",
-    B1: "Blue1",
-    B2: "Blue2",
-    B3: "Blue3",
+      R1: "Red1",
+      R2: "Red2",
+      R3: "Red3",
+      B1: "Blue1",
+      B2: "Blue2",
+      B3: "Blue3",
     };
 
     return (
@@ -65,13 +66,13 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
           <Text style={styles.header2}>Match #</Text>
           <TextInput
             style={styles.input}
-            onChangeText={setMatchNum}
-            value={matchNum}
+            onChangeText={text => setMatchNum(parseInt(text))}
+            value={matchNum ? String(matchNum) : undefined}
             placeholder="Match #..."
             keyboardType="numeric"
           />
   
-          <TouchableOpacity /* onPress={findMatch} */ >
+          <TouchableOpacity onPress={async () => await findMatch()} >
             <Text style={styles.findMatch}>Find Match</Text>
           </TouchableOpacity>
   
@@ -80,7 +81,7 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
   
           <TouchableOpacity
             onPress={async () => {
-                //await submitPrematch();
+                await submitPrematch();
             //   navigation.navigate(toNavigate, {
             //     match: parseInt(matchNum),
             //   });
@@ -91,6 +92,56 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
         </ScrollView>
       </SafeAreaView>
     )
+
+    async function findMatch() {
+        let settingsJSON = await JSON.parse(
+          await FileSystem.readAsStringAsync(settingsFileUri)
+        );
+
+        let position = await settingsJSON["Settings"]["driverStation"];
+    
+        let jsontext = await FileSystem.readAsStringAsync(scheduleFileUri);
+        let matchjson = await JSON.parse(jsontext);
+        if (!matchNum) return;
+        let teams = await matchjson["Schedule"][matchNum - 1]["teams"];
+    
+        await teams.forEach((team: any) => {
+          // console.log(apiStations[position as keyof typeof apiStations])
+          if (team["station"] == apiStations[position as keyof typeof apiStations]) {
+            setTeamNum(parseInt(team["teamNumber"]));
+            return;
+          }
+        });
+    }
+  
+    async function submitPrematch() {
+        let tmp = await FileSystem.getInfoAsync(settingsFileUri);
+        if (!tmp.exists) {
+          setToNavigate("Settings");
+          return;
+        }
+    
+        let settingsJSON = await JSON.parse(
+          await FileSystem.readAsStringAsync(settingsFileUri)
+        );
+    
+        let team = teamNum;
+        let match = matchNum;
+        let position = await settingsJSON["Settings"]["driverStation"];
+        let alliance = await settingsJSON["Settings"]["driverStation"].charAt(0);
+        let allianceKey = `${await alliance}${match}`;
+        let scout = await settingsJSON["Settings"]["scoutName"];
+        //let startPos = await startingPositions[selectedPosition];
+        let startPos = "N/A";
+    
+        let tmaKey = `${team}-${allianceKey}`;
+    
+        let csvText = `${team},${match},${tmaKey},${position},${alliance},${allianceKey},${scout},${startPos},`;
+    
+        let csvURI = `${FileSystem.documentDirectory}match${match}.csv`;
+        await FileSystem.writeAsStringAsync(csvURI, csvText);
+        console.log(`CSV Text: ${await FileSystem.readAsStringAsync(csvURI)}`);
+    }
 }
 
 export default PregameScreen;
