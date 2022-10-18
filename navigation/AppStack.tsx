@@ -5,6 +5,7 @@ import HomeScreen from "../screens/Home";
 import PregameScreen from "../screens/Pregame";
 import StackParamList from "../library/StackParamList";
 import SettingsScreen from "../screens/Settings";
+import MatchScreen from "../screens/Match";
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -15,6 +16,7 @@ const AppStack = () => {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="Pregame" component={PregameScreen} />
+        <Stack.Screen name="Match" component={MatchScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
