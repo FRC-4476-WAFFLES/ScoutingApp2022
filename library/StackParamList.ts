@@ -3,7 +3,9 @@ type StackParamList = {
     Home: undefined;
     Settings: undefined;
     Pregame: undefined;
-    Match: undefined;
+    Match: {
+        matchNum: number;
+    };
 }
 
 export default StackParamList;

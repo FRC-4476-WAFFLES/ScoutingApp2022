@@ -82,9 +82,11 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
           <TouchableOpacity
             onPress={async () => {
                 await submitPrematch();
-            //   navigation.navigate(toNavigate, {
-            //     match: parseInt(matchNum),
-            //   });
+                console.log(matchNum);
+                if (!matchNum) return;
+                navigation.navigate("Match", {
+                  matchNum: matchNum,
+                });
             }}
           >
             <Text style={styles.submit}>Submit</Text>
