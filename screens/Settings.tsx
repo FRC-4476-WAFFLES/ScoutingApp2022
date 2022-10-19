@@ -92,6 +92,17 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
                     </View>
                 </View>
 
+                <View>
+                    <Text style={styles.heading1}>Scout Name</Text>
+                    <Text style={styles.headingWarning}>*MUST SET</Text>
+                    <TextInput
+                        style={styles.nameInput}
+                        onChangeText={setNameText}
+                        value={nameText == "undefined" ? undefined : nameText}
+                        placeholder="Scout Name"
+                    />
+                </View>
+
                 <TouchableOpacity 
                     style={styles.button}
                     onPress={() => setShowPicker(!showPicker)}
