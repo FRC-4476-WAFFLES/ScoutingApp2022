@@ -6,7 +6,9 @@ type StackParamList = {
     Match: {
         matchNum: number;
     };
-    QRCode: undefined;
+    QRCode: {
+        data: string;
+    };
 }
 
 export default StackParamList;
