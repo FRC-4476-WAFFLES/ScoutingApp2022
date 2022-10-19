@@ -256,9 +256,9 @@ const MatchScreen: React.FunctionComponent<MatchScreenProps> = props => {
                             <TouchableOpacity
                                 onPress={async () => {
                                     await matchSubmit();
-                                    // navigation.navigate("QRCode", {
-                                    //     data: await getDataString(),
-                                    // });
+                                    navigation.navigate("QRCode", {
+                                        data: await getDataString(),
+                                    });
                                 }}
                             >
                                 <Text style={styles.submit}>Submit</Text>
