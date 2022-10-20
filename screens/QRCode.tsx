@@ -14,6 +14,8 @@ import { captureScreen } from "react-native-view-shot";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
+import QRCode from "react-qr-code";
+
 import * as MediaLibrary from 'expo-media-library';
 import * as Permissions from 'expo-permissions';
 
@@ -35,14 +37,16 @@ const QRCodeScreen: React.FunctionComponent<QRCodeScreenProps> = props => {
         }
     
         getPermissions();
-      })
+
+        
+    })
 
     return (
         <SafeAreaView>
             <ScrollView>
                 <ScreenTitle title={"QR Code"} />
                 <View style={styles.qrcodeContainer}>
-                    {/* <QRCode value={route.params.data} size={300} /> */}
+                    <QRCode value={csvData} size={300} />
                 </View>
                 <View style={styles.displayText}>
                     <Text style={styles.text}>
