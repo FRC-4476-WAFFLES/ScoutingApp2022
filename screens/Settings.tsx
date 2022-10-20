@@ -174,7 +174,7 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
                 <TouchableOpacity
                     onPress={async () => {
                         await saveSettings();
-                        // navigation.navigate("Startup");
+                        navigation.navigate("Home");
                     }}
                 >
                     <Text style={styles.save}>Save</Text>
