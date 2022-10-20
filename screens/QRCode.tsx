@@ -46,7 +46,7 @@ const QRCodeScreen: React.FunctionComponent<QRCodeScreenProps> = props => {
             <ScrollView>
                 <ScreenTitle title={"QR Code"} />
                 <View style={styles.qrcodeContainer}>
-                    <QRCode value={csvData} size={300} />
+                    <QRCode value={csvData} size={400} />
                 </View>
                 <View style={styles.displayText}>
                     <Text style={styles.text}>
@@ -112,11 +112,8 @@ export default QRCodeScreen;
 const styles = StyleSheet.create({
     qrcodeContainer: {
       marginTop: "10%",
-      marginLeft: "28%",
       marginBottom: "10%",
-      transform: [{
-        scale: 1.25
-      }]
+      alignItems: 'center'
     },
   
     text: {
