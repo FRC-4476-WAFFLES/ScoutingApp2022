@@ -10,6 +10,7 @@ import {
     Dimensions,
     TouchableOpacity,
     TextInput,
+    Image
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as FileSystem from "expo-file-system";
@@ -32,6 +33,7 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
     const [showMatchSchedule, setShowMatchSchedule] = React.useState<boolean>(false);
     
     const [matchScheduleString, setMatchScheduleString] = React.useState<string>();
+    const [showScheduleCheckmark, setShowScheduleCheckmark] = React.useState<boolean>(false);
 
     const scheduleFileUri = `${
         FileSystem.documentDirectory
@@ -76,12 +78,19 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
                 <View>
                     <Text style={styles.heading1}>Event Code</Text>
                     <Text style={styles.headingWarning}>DO NOT TOUCH IF SCOUTING AT MATCH</Text>
-                    <TextInput
-                        style={styles.codeInput}
-                        onChangeText={setCodeText}
-                        value={codeText}
-                        placeholder="Event Code"
-                    />
+                    <View style={styles.eventCodeContainer}>
+                        <TextInput
+                            style={styles.codeInput}
+                            onChangeText={setCodeText}
+                            value={codeText}
+                            placeholder="Event Code"
+                        />
+
+                        {
+                            showScheduleCheckmark &&
+                            <Image style={styles.scheduleCheckmark} source={require('../assets/images/checkmark-icon.png')} />
+                        }
+                    </View>
                     <View style={styles.importSchedule}>
                         <TouchableOpacity
                             style={styles.importScheduleButton}
@@ -233,10 +242,15 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
     
     async function downloadMatchSchedule() {
         await getMatchSchedule();
-        if (!jsonText) return;
+        if (!jsonText) {
+            console.warn('Failed Downloading Match Schedule. Please Retry.')
+            return;
+        }
+
         let theJSON = JSON.stringify(await JSON.parse(jsonText), null, "\t");
         await FileSystem.writeAsStringAsync(scheduleFileUri, theJSON);
-        console.log(await FileSystem.readAsStringAsync(scheduleFileUri));
+        setShowScheduleCheckmark(true);
+        // console.log(await FileSystem.readAsStringAsync(scheduleFileUri));
     }
 
     async function getMatchSchedule() {
@@ -340,12 +354,12 @@ const styles = StyleSheet.create({
 
     codeInput: {
         fontSize: Dimensions.get("window").width * 0.05,
-        width: "80%",
         backgroundColor: "#FFBCBC",
         borderRadius: 10,
         marginTop: 15,
-        padding: "2%",
-        left: "10%",
+        marginHorizontal: 10,
+        paddingVertical: "2%",
+        paddingHorizontal: 90,
         justifyContent: "center",
         textAlign: "center",
         marginBottom: "5%",
@@ -375,6 +389,16 @@ const styles = StyleSheet.create({
 
     importScheduleButton: {
 
+    },
+
+    eventCodeContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+
+    scheduleCheckmark: {
+        resizeMode: 'contain',
+        width: 50,
     },
 
     pickerContainer: {
