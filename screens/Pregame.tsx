@@ -56,6 +56,13 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
       B3: "Blue3",
     };
 
+    React.useEffect(() => {
+        if (route.params?.matchNum) {
+            setMatchNum(route.params.matchNum);
+            findMatch();
+        }
+    })
+
     return (
         <SafeAreaView style={styles.container}>
         <ScrollView>

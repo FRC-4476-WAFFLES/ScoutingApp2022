@@ -2,11 +2,14 @@
 type StackParamList = {
     Home: undefined;
     Settings: undefined;
-    Pregame: undefined;
+    Pregame: {
+        matchNum?: number;
+    };
     Match: {
         matchNum: number;
     };
     QRCode: {
+        matchNum: number;
         data: string;
     };
 }

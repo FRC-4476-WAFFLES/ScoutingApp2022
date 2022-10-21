@@ -45,9 +45,11 @@ const QRCodeScreen: React.FunctionComponent<QRCodeScreenProps> = props => {
         <SafeAreaView>
             <ScrollView>
                 <ScreenTitle title={"QR Code"} />
+
                 <View style={styles.qrcodeContainer}>
                     <QRCode value={csvData} size={400} />
                 </View>
+
                 <View style={styles.displayText}>
                     <Text style={styles.text}>
                     CSV: {csvData}
@@ -56,12 +58,23 @@ const QRCodeScreen: React.FunctionComponent<QRCodeScreenProps> = props => {
                     {getDataFormatted(route.params.data)}
                     </Text>
                 </View>
+
                 <TouchableOpacity onPress={() => captureQR()} style={styles.button}>
                     <Text style={styles.buttonText}>Save Image</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => { nextMatch() } } >
+                    <Text style={styles.buttonText}>Next Match</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     );
+
+    function nextMatch() {
+        navigation.navigate("Pregame", {
+          matchNum: route.params.matchNum + 1,
+        })
+    }
 
     async function captureQR() {
         try {

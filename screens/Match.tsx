@@ -257,6 +257,7 @@ const MatchScreen: React.FunctionComponent<MatchScreenProps> = props => {
                                 onPress={async () => {
                                     await matchSubmit();
                                     navigation.navigate("QRCode", {
+                                        matchNum: route.params.matchNum,
                                         data: await getDataString(),
                                     });
                                 }}
