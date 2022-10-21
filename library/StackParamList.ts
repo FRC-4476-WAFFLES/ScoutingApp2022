@@ -7,6 +7,7 @@ type StackParamList = {
     };
     Match: {
         matchNum: number;
+        teamNum: number;
     };
     QRCode: {
         matchNum: number;

@@ -91,8 +91,10 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
                 await submitPrematch();
                 console.log(matchNum);
                 if (!matchNum) return;
+                if (!teamNum) return;
                 navigation.navigate("Match", {
                   matchNum: matchNum,
+                  teamNum: teamNum,
                 });
             }}
           >

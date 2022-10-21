@@ -9,7 +9,8 @@ import {
     Image,
     TextInput,
     Platform,
-    Dimensions
+    Dimensions,
+    StatusBar
 } from "react-native";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -76,6 +77,8 @@ const MatchScreen: React.FunctionComponent<MatchScreenProps> = props => {
             <ScrollView>
 
                 <ScreenTitle title="Match" />
+
+                <Text style={styles.header}>You are scouting Team {route.params.teamNum}</Text>
 
                 <View style={[styles.collapsibleContainer]}>
                     <TouchableOpacity
@@ -372,6 +375,13 @@ export default MatchScreen;
 const styles = StyleSheet.create({
     font: {
 
+    },
+
+    header: {
+        fontSize: RFPercentage(4),
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        marginBottom: 10,
+        textAlign: "center",
     },
 
     commentIconContainer: {
