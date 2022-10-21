@@ -10,7 +10,7 @@ import {
   Dimensions
 } from "react-native";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import { captureScreen } from "react-native-view-shot";
+import ViewShot, { captureScreen, captureRef } from "react-native-view-shot";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
@@ -27,6 +27,8 @@ type QRCodeScreenProps = NativeStackScreenProps<StackParamList, "QRCode">;
 const QRCodeScreen: React.FunctionComponent<QRCodeScreenProps> = props => {
     const { navigation, route } = props;
     const csvData = route.params.data;
+
+    const ref = React.useRef(null);
 
     React.useEffect(() => {
         const getPermissions = async () => {
@@ -46,7 +48,7 @@ const QRCodeScreen: React.FunctionComponent<QRCodeScreenProps> = props => {
             <ScrollView>
                 <ScreenTitle title={"QR Code"} />
 
-                <View style={styles.qrcodeContainer}>
+                <View ref={ref} style={styles.qrcodeContainer}>
                     <QRCode value={csvData} size={400} />
                 </View>
 
@@ -83,6 +85,11 @@ const QRCodeScreen: React.FunctionComponent<QRCodeScreenProps> = props => {
             quality: 1,
             format: "png",
           });
+          // const result = await captureRef(ref, {
+          //     result: "tmpfile",
+          //     quality: 1,
+          //     format: "png",            
+          // })
           await MediaLibrary.saveToLibraryAsync(result);
         } catch (e) {
           console.log(e);
