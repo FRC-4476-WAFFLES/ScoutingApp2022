@@ -57,11 +57,11 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
     };
 
     React.useEffect(() => {
-        if (route.params?.matchNum) {
-            setMatchNum(route.params.matchNum);
-            findMatch();
-        }
-    }, [])
+      if (route.params?.matchNum) {
+          setMatchNum(route.params.matchNum);
+          findMatch();
+      }
+    }, [route.params])
 
     return (
         <SafeAreaView style={styles.container}>
