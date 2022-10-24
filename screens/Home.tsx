@@ -28,6 +28,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = props => {
         {/* Background and title */}
         <ImageBackground
           style={styles.backdrop}
+          resizeMode="cover"
           source={require("../assets/images/HomeScreen/backdrop.png")}
         >
           <Text style={styles.title}>W.A.F.F.L.E.S Scouting</Text>
@@ -37,7 +38,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = props => {
         <TouchableOpacity
           style={styles.button}
           onPress={() =>
-            navigation.navigate("Pregame")
+            navigation.navigate("Pregame", {})
           }
         >
           <View>
@@ -77,7 +78,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: "transparent",
+      backgroundColor: "orange",
       alignItems: "center",
       justifyContent: "center",
       overflow: "hidden",
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
       fontSize: 50,
       color: "white",
       textAlign: "center",
-      paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+      paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 30,
     },
   
     button: {
