@@ -61,7 +61,7 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
             setMatchNum(route.params.matchNum);
             findMatch();
         }
-    })
+    }, [])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -73,7 +73,7 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
           <Text style={styles.header2}>Match #</Text>
           <TextInput
             style={styles.input}
-            onChangeText={text => setMatchNum(parseInt(text))}
+            onChangeText={text => { setMatchNum(parseInt(text)) }}
             value={matchNum ? String(matchNum) : undefined}
             placeholder="Match #..."
             keyboardType="numeric"
@@ -82,9 +82,15 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
           <TouchableOpacity onPress={async () => await findMatch()} >
             <Text style={styles.findMatch}>Find Match</Text>
           </TouchableOpacity>
-  
-          <Text style={styles.header}>You are scouting Team...</Text>
-          <Text style={styles.header}>{teamNum}</Text>
+
+          { teamNum ? 
+          
+          <View>
+            <Text style={styles.header}>You are scouting Team...</Text>
+            <Text style={styles.header}>{teamNum}</Text>
+          </View>
+          : <Text style={styles.header}>Please enter a valid Match Number and press Find Match</Text>
+          }
   
           <TouchableOpacity
             onPress={async () => {
@@ -114,7 +120,16 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
         let jsontext = await FileSystem.readAsStringAsync(scheduleFileUri);
         let matchjson = await JSON.parse(jsontext);
         if (!matchNum) return;
-        let teams = await matchjson["Schedule"][matchNum - 1]["teams"];
+
+        let teams;
+
+        try {
+          teams = await matchjson["Schedule"][matchNum - 1]["teams"];
+        } catch (e) {
+          setTeamNum(undefined);
+          console.warn(e)
+          return;
+        }
     
         await teams.forEach((team: any) => {
           // console.log(apiStations[position as keyof typeof apiStations])
@@ -199,6 +214,7 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       textAlign: "center",
       marginBottom: "5%",
+      marginTop: 30,
     },
   
     startPosContainer: {
