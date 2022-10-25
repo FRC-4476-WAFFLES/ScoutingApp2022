@@ -34,6 +34,9 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
     const scheduleFileUri = `${
         FileSystem.documentDirectory
     }${"MatchSchedule.json"}`;
+    const scheduleCsvUri = `${
+      FileSystem.documentDirectory
+    }${"MatchScheduleCsv.json"}`;
     const settingsFileUri = `${
         FileSystem.documentDirectory
     }${"ScoutingAppSettings.json"}`;
@@ -116,25 +119,60 @@ const PregameScreen: React.FunctionComponent<PregameScreenProps> = props => {
         );
 
         let position = await settingsJSON["Settings"]["driverStation"];
-    
-        let jsontext = await FileSystem.readAsStringAsync(scheduleFileUri);
-        let matchjson = await JSON.parse(jsontext);
-        if (!matchNum) return;
 
-        let teams;
+        let tmp = await FileSystem.getInfoAsync(scheduleCsvUri);
 
-        try {
-          teams = await matchjson["Schedule"][matchNum - 1]["teams"];
-        } catch (e) {
-          setTeamNum(undefined);
-          console.warn(e)
+        if (!tmp.exists) {
+
+          let tmp1 = await FileSystem.getInfoAsync(scheduleFileUri);
+          if (!tmp1.exists) {
+            navigation.navigate("Settings");
+            return;
+          }
+
+          let jsontext = await FileSystem.readAsStringAsync(scheduleFileUri);
+          let matchjson = await JSON.parse(jsontext);
+          if (!matchNum) return;
+
+          let teams;
+
+          try {
+            teams = await matchjson["Schedule"][matchNum - 1]["teams"];
+          } catch (e) {
+            setTeamNum(undefined);
+            console.warn(e)
+            return;
+          }
+
+          await teams.forEach((team: any) => {
+            // console.log(apiStations[position as keyof typeof apiStations])
+            if (team["station"] == apiStations[position as keyof typeof apiStations]) {
+              setTeamNum(parseInt(team["teamNumber"]));
+              return;
+            }
+          });
+
           return;
         }
     
+        let jsontext = await FileSystem.readAsStringAsync(scheduleCsvUri);
+        let matchjson = await JSON.parse(jsontext);
+        
+        if (!matchNum) return;
+        
+        let teams;
+        try {
+          teams = await matchjson["Schedule"][matchNum - 1]["Teams"];
+        } catch (e) {
+          setTeamNum(undefined);
+          console.warn(e);
+          return;
+        }
+
         await teams.forEach((team: any) => {
-          // console.log(apiStations[position as keyof typeof apiStations])
-          if (team["station"] == apiStations[position as keyof typeof apiStations]) {
+          if (team["station"] == position) {
             setTeamNum(parseInt(team["teamNumber"]));
+            console.log(team["teamNumber"]);
             return;
           }
         });

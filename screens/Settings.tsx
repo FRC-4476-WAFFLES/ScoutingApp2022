@@ -13,7 +13,9 @@ import {
     Image
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+
 import * as FileSystem from "expo-file-system";
+import { BarCodeScanner, BarCodeScannerResult } from "expo-barcode-scanner";
 
 import StackParamList from "../library/StackParamList";
 import ScreenTitle from "../components/ScreenTitle";
@@ -22,6 +24,11 @@ type SettingsScreenProps = NativeStackScreenProps<StackParamList, "Settings">;
 
 const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
     const { navigation, route } = props;
+
+    const [hasPermissions, setHasPermissions] = React.useState<boolean>();
+    const [scanned, setScanned] = React.useState<boolean>(false);
+    const [shouldScan, setShouldScan] = React.useState<boolean>(false);
+    const [text, setText] = React.useState<string>("Not yet scanned.")
 
     const [codeText, setCodeText] = React.useState<string>();
     const [nameText, setNameText] = React.useState<string>();
@@ -41,16 +48,23 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
     const settingsFileUri = `${
         FileSystem.documentDirectory
     }${"ScoutingAppSettings.json"}`;
+    const scheduleCsvUri = `${
+        FileSystem.documentDirectory
+    }${"MatchScheduleCsv.json"}`;
 
     const [driverstation, setDriverstation] = React.useState<string>();
     const [showPicker, setShowPicker] = React.useState<boolean>(false);
 
     
     React.useEffect(() => {
+        const askCameraPermissions = async () => {
+            await askForCameraPermission();
+        }
+
         const setSettingsVars = async () => {
             try {
                 let settingsJSON = await JSON.parse(
-                await FileSystem.readAsStringAsync(settingsFileUri)
+                    await FileSystem.readAsStringAsync(settingsFileUri)
                 );
                 setNameText(await settingsJSON["Settings"]["scoutName"]);
                 setDriverstation(await settingsJSON["Settings"]["driverStation"]);
@@ -65,15 +79,101 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
             setMatchScheduleExists(tmp.exists);
         }
 
+        askCameraPermissions();
         setSettingsVars();
         checkMatchScheduleExists();
     }, []);
+
+    const handleBarCodeScanned = async ({type, data}: BarCodeScannerResult) => {
+        setScanned(true);
+
+        data = 'Match,R1,R2,R3,B1,B2,B3\\n' + data;
+        setText(data);
+
+        setShouldScan(false);
+
+        console.log(`Type: ${type}, Data: ${data}`);
+
+        // const csvtojson = require('csvtojson');
+        // csvtojson()
+        // .fromString(data)
+        // .then((json: any) => {console.log(json)})
+
+        let csvArray = data.split('\\n');
+        
+        let result: any = {"Schedule": []};
+        let headers = csvArray[0].split(",");
+
+        for (let i = 1; i < csvArray.length - 1; i++) {
+            let values = csvArray[i].split(',');
+
+            let obj: any = {
+                "Match": values[0],
+                "Teams": []
+            }
+            
+            for (let j = 1; j < headers.length; j++) {
+                let teamobj: any = {
+                    "station": headers[j],
+                    "teamNumber": parseInt(values[j]),
+                }
+                
+                obj["Teams"].push(teamobj);
+            }
+
+            result.Schedule.push(obj);
+        }
+        
+        await FileSystem.writeAsStringAsync(scheduleCsvUri, JSON.stringify(result));
+        setShowScheduleCheckmark(true);
+        console.log(JSON.stringify(JSON.parse(await FileSystem.readAsStringAsync(scheduleCsvUri)), null, '\t'));
+    }
+
+    const handleScanClicked = () => {
+        setShouldScan(!shouldScan);
+        setScanned(false);
+    }
+
+    if (hasPermissions === undefined) {
+        return(
+            <View style={styles.container}>
+                <Text>Requesting for camera permission</Text>
+            </View>
+        )
+    }
+
+    if (hasPermissions === false) {
+        <View style={styles.container}>
+            <Text style={{margin: 10}}>No access to Camera</Text>
+            <Button title={'allow Camera'} onPress={() => askForCameraPermission()} />
+        </View>
+    }
 
     return (
         <SafeAreaView style={styles.safeareaview} >
             <ScrollView>
                 
                 <ScreenTitle title="Settings" />
+
+                <View style={[{marginVertical: 20}, styles.importSchedule]}>
+                        <TouchableOpacity
+                            style={styles.importScheduleButton}
+                            onPress={handleScanClicked}
+                        >
+                        <Text style={styles.heading2}>{shouldScan ? "Stop Scanning" : "Scan Event Match Schedule"}</Text>
+                        </TouchableOpacity>
+                </View>
+
+                {shouldScan && 
+                    <View style={styles.container}>
+                        <View style={styles.barcodeBox}>
+                            <BarCodeScanner
+                                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                                style={{ width: 675, height: 675 }} 
+                            />
+                        </View>
+                    </View>
+                }
 
                 <View>
                     <Text style={styles.heading1}>Event Code</Text>
@@ -212,6 +312,15 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
         </SafeAreaView>
     );
 
+    async function askForCameraPermission() {
+        const { status } = await BarCodeScanner.requestPermissionsAsync();
+        setHasPermissions(status == 'granted');
+    }
+
+    function cameraSchedule() {
+        
+    }
+
     function onDriverstationPressed(driverstation: string) {
         setDriverstation(driverstation);
         setShowPicker(false);
@@ -248,6 +357,7 @@ const SettingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
         }
 
         let theJSON = JSON.stringify(await JSON.parse(jsonText), null, "\t");
+        console.log(theJSON)
         await FileSystem.writeAsStringAsync(scheduleFileUri, theJSON);
         setShowScheduleCheckmark(true);
         // console.log(await FileSystem.readAsStringAsync(scheduleFileUri));
@@ -286,6 +396,28 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center'
     },
+
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    barcodeBox: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 500,
+        height: 500,
+        overflow: 'hidden',
+        borderRadius: 30,
+        backgroundColor: 'tomato',
+    },
+
+    maintext: {
+        fontsize: 16,
+        margin: 20,
+    },
+
     button: {
         paddingVertical: 35,
         alignItems: 'center',
